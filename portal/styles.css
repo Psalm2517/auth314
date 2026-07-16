@@ -368,6 +368,15 @@ p {
   color: var(--muted);
 }
 
+.code-block .tok-bool {
+  color: #d7ba7d;
+}
+
+.payload-note {
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+
 .cta-link {
   display: inline-block;
   color: var(--accent-text);

@@ -94,16 +94,14 @@ describe("POST /auth/callback", () => {
       Authorization: "Bearer user-token",
     });
 
-    // Callback delivered with the expected payload.
+    // Callback delivered with only a verified signal -- no Pi identity data.
     const cbCall = fetchMock.mock.calls.find((c) =>
       String(c[0]).includes("cb.example"),
     );
     expect(JSON.parse((cbCall?.[1] as RequestInit).body as string)).toEqual({
-      platform: "discord",
       platform_user_id: "123456789",
       guild_id: "987654321",
-      pi_uid: "pi-uid-1",
-      pi_username: "pioneer",
+      verified: true,
     });
   });
 

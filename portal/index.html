@@ -69,12 +69,14 @@
             <div class="section">
               <h2 class="section-title">Webhook payload</h2>
               <pre class="code-block"><code><span class="tok-brace">{</span>
-  <span class="tok-key">"platform"</span>: <span class="tok-str">"..."</span>,
   <span class="tok-key">"platform_user_id"</span>: <span class="tok-str">"..."</span>,
   <span class="tok-key">"guild_id"</span>: <span class="tok-str">"..."</span>,
-  <span class="tok-key">"pi_uid"</span>: <span class="tok-str">"..."</span>,
-  <span class="tok-key">"pi_username"</span>: <span class="tok-str">"..."</span>
+  <span class="tok-key">"verified"</span>: <span class="tok-bool">true</span>
 <span class="tok-brace">}</span></code></pre>
+              <p class="payload-note">
+                Pi identity (uid, username) stays internal to Auth314 and is
+                never included in the webhook payload.
+              </p>
             </div>
           </div>
         </div>

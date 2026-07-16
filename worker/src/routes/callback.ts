@@ -60,13 +60,14 @@ export async function handleAuthCallback(
   };
   await putIdentity(env, identity);
 
-  // 5. POST the result to the integration's callback_url.
+  // 5. POST the result to the integration's callback_url. Pi identity
+  // (pi_uid, pi_username) stays internal to Auth314 and is never sent to
+  // third-party integrations -- only a verified signal, tied back to the
+  // platform_user_id/guild_id the integration already knows.
   const callbackPayload = {
-    platform: record.platform,
     platform_user_id: record.platform_user_id,
     guild_id: record.guild_id,
-    pi_uid: me.uid,
-    pi_username: me.username,
+    verified: true,
   };
 
   try {
