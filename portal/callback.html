@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<!--
+  Stub — not part of the current verification flow.
+
+  The portal now uses the Pi Browser SDK (window.Pi.authenticate) with a
+  pi:// deep link / QR fallback (see index.html), so there is no OAuth
+  redirect step and nothing currently links here. This page is kept as-is
+  in case the Pi Sign-in OAuth authorize-endpoint flow is reactivated later,
+  since it still correctly extracts an access_token fragment and posts it
+  to /api/auth/callback.
+-->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
