@@ -1,0 +1,37 @@
+name: Deploy Worker
+
+on:
+  # Manual "Run workflow" button in the Actions tab.
+  workflow_dispatch:
+  # Auto-deploy when Worker code or config changes on main.
+  push:
+    branches: [main]
+    paths:
+      - "worker/**"
+      - "wrangler.toml"
+      - ".github/workflows/deploy.yml"
+
+jobs:
+  deploy:
+    name: wrangler deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+
+      - name: Install dependencies
+        working-directory: worker
+        run: npm ci
+
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          # wrangler.toml lives at the repo root.
+          workingDirectory: "."
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
