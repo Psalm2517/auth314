@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Auth314 — Verifying</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="brand">Auth<span>314</span></div>
+      <div class="subtitle">Pi Network verification</div>
+
+      <!-- processing -->
+      <div id="state-processing" class="state active">
+        <div class="spinner"></div>
+        <h1>Verifying…</h1>
+        <p>Confirming your Pi identity.</p>
+      </div>
+
+      <!-- success -->
+      <div id="state-success" class="state">
+        <div class="icon success">✓</div>
+        <h1>Verified!</h1>
+        <p id="success-message">
+          Your Pi account is verified. You can return to your community now.
+        </p>
+      </div>
+
+      <!-- error -->
+      <div id="state-error" class="state">
+        <div class="icon error">✕</div>
+        <h1>Verification failed</h1>
+        <p id="error-message">Something went wrong. Please try again.</p>
+      </div>
+
+      <div class="footer">Powered by Auth314</div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+      (function () {
+        var cfg = window.AUTH314_CONFIG || {};
+
+        function show(id) {
+          var states = document.querySelectorAll(".state");
+          for (var i = 0; i < states.length; i++) {
+            states[i].classList.remove("active");
+          }
+          document.getElementById(id).classList.add("active");
+        }
+
+        function showError(msg) {
+          if (msg) document.getElementById("error-message").textContent = msg;
+          show("state-error");
+        }
+
+        function showSuccess(username) {
+          if (username) {
+            document.getElementById("success-message").textContent =
+              "Verified as @" + username + ". You can return to your community now.";
+          }
+          show("state-success");
+        }
+
+        // Extract access_token from the URL fragment (#access_token=...).
+        var fragment = window.location.hash.replace(/^#/, "");
+        var hashParams = new URLSearchParams(fragment);
+        var accessToken = hashParams.get("access_token");
+
+        var session = null;
+        try {
+          session = sessionStorage.getItem("auth314_session");
+        } catch (e) {}
+
+        if (!accessToken) {
+          showError("No access token returned from Pi. Please restart verification.");
+          return;
+        }
+        if (!session) {
+          showError("Your verification session was lost. Please restart from your community bot.");
+          return;
+        }
+
+        fetch(cfg.API_BASE_URL.replace(/\/$/, "") + "/api/auth/callback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ access_token: accessToken, session: session }),
+        })
+          .then(function (res) {
+            return res.json().then(function (data) {
+              return { ok: res.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            // Clear one-time session regardless of outcome.
+            try {
+              sessionStorage.removeItem("auth314_session");
+            } catch (e) {}
+
+            if (result.ok) {
+              showSuccess(result.data && result.data.pi_username);
+            } else {
+              showError(
+                (result.data && result.data.error) ||
+                  "Verification could not be completed."
+              );
+            }
+          })
+          .catch(function () {
+            showError("Could not reach the verification service. Please try again.");
+          });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Auth314 — Pi Sign-in</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="brand">Auth<span>314</span></div>
+      <div class="subtitle">Pi Network verification</div>
+
+      <!-- loading -->
+      <div id="state-loading" class="state active">
+        <div class="spinner"></div>
+        <p>Loading…</p>
+      </div>
+
+      <!-- ready -->
+      <div id="state-ready" class="state">
+        <h1>Verify your Pi account</h1>
+        <p>Confirm your Pi identity to complete verification for your community.</p>
+        <button id="verify-btn" class="btn">Verify with Pi</button>
+      </div>
+
+      <!-- error -->
+      <div id="state-error" class="state">
+        <div class="icon error">✕</div>
+        <h1>Something went wrong</h1>
+        <p id="error-message">This verification link is invalid or has expired.</p>
+      </div>
+
+      <div class="footer">Powered by Auth314</div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+      (function () {
+        var cfg = window.AUTH314_CONFIG || {};
+
+        function show(id) {
+          var states = document.querySelectorAll(".state");
+          for (var i = 0; i < states.length; i++) {
+            states[i].classList.remove("active");
+          }
+          document.getElementById(id).classList.add("active");
+        }
+
+        function showError(msg) {
+          if (msg) {
+            document.getElementById("error-message").textContent = msg;
+          }
+          show("state-error");
+        }
+
+        var params = new URLSearchParams(window.location.search);
+        var session = params.get("session");
+
+        if (!session) {
+          showError("No verification session found. Please use the link from your community bot.");
+          return;
+        }
+
+        // Persist the session so the /callback page can read it after the
+        // OAuth round-trip (the fragment redirect drops query params).
+        try {
+          sessionStorage.setItem("auth314_session", session);
+        } catch (e) {}
+
+        show("state-ready");
+
+        document.getElementById("verify-btn").addEventListener("click", function () {
+          var redirectUri = cfg.PORTAL_BASE_URL.replace(/\/$/, "") + "/callback.html";
+          var url =
+            cfg.PI_AUTHORIZE_BASE_URL +
+            "?client_id=" +
+            encodeURIComponent(cfg.PI_OAUTH_CLIENT_ID) +
+            "&redirect_uri=" +
+            encodeURIComponent(redirectUri) +
+            "&response_type=token";
+          window.location.href = url;
+        });
+      })();
+    </script>
+  </body>
+</html>

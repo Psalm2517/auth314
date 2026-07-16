@@ -1,0 +1,24 @@
+# Cloudflare Worker configuration for the Auth314 core service.
+name = "auth314-worker"
+main = "worker/src/index.ts"
+compatibility_date = "2024-06-01"
+
+# --- KV namespace binding ---
+# Create the namespace first:
+#   wrangler kv:namespace create AUTH314_KV
+# then paste the returned id below (and a preview id for `wrangler dev`).
+[[kv_namespaces]]
+binding = "AUTH314_KV"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_KV_PREVIEW_NAMESPACE_ID"
+
+# --- Non-secret config variables ---
+# The Pi authorize endpoint is unconfirmed; swap it here without code changes.
+[vars]
+PI_AUTHORIZE_BASE_URL = "https://auth.minepi.com/oauth/authorize"
+PORTAL_BASE_URL = "https://auth314.pages.dev"
+
+# --- Secrets (do NOT put these here) ---
+# Set with:
+#   wrangler secret put PI_OAUTH_CLIENT_ID
+#   wrangler secret put PI_API_KEY

@@ -1,0 +1,32 @@
+import type { Env } from "./types";
+import { error, preflight } from "./lib/http";
+import { handleVerifyInit } from "./routes/verify";
+import { handleAuthCallback } from "./routes/callback";
+import { handleHealth } from "./routes/health";
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // CORS preflight — integrations call this API from external origins.
+    if (request.method === "OPTIONS") {
+      return preflight();
+    }
+
+    const url = new URL(request.url);
+    const { pathname } = url;
+    const method = request.method;
+
+    if (pathname === "/api/health" && method === "GET") {
+      return handleHealth();
+    }
+
+    if (pathname === "/api/verify/init" && method === "POST") {
+      return handleVerifyInit(request, env);
+    }
+
+    if (pathname === "/api/auth/callback" && method === "POST") {
+      return handleAuthCallback(request, env);
+    }
+
+    return error("Not found", 404);
+  },
+};
