@@ -7,8 +7,8 @@
   --accent: #e8e8e9;
   --accent-hover: #ffffff;
   --accent-text: #101112;
-  --success: #a8a9ac;
-  --error: #a8a9ac;
+  --success: #4caf6d;
+  --error: #e5534b;
 }
 
 * {
