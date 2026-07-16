@@ -11,87 +11,97 @@
   </head>
   <body>
     <!-- landing: shown when no ?session= param is present -->
-    <div id="landing" class="card landing" style="display: none">
-      <div class="brand">Auth<span>314</span></div>
-      <div class="subtitle">Pi Network verification</div>
+    <div id="landing" class="landing-page" style="display: none">
+      <header class="landing-nav">
+        <div class="landing-nav-inner">
+          <div class="brand">Auth<span>314</span></div>
+        </div>
+      </header>
 
-      <h1 class="landing-headline">
-        Pi Network verification for Discord, Telegram, and beyond.
-      </h1>
-      <p class="landing-desc">
-        Auth314 connects Pi Network identity to community platforms. Verify
-        once with Pi Sign-in, get access everywhere.
-      </p>
+      <section class="landing-hero">
+        <div class="landing-hero-inner">
+          <h1 class="landing-headline">
+            Pi Network verification for Discord, Telegram, and beyond.
+          </h1>
+          <p class="landing-desc">
+            Auth314 connects Pi Network identity to community platforms.
+            Verify once with Pi Sign-in, get access everywhere.
+          </p>
+          <a
+            class="cta-link"
+            href="https://github.com/Psalm2517/auth314"
+            target="_blank"
+            rel="noopener"
+            >View on GitHub</a
+          >
+        </div>
+      </section>
 
-      <div class="section">
-        <h2 class="section-title">How it works</h2>
-        <ol class="steps">
-          <li>
-            <span class="step-num">1</span>
-            <span class="step-text">Your bot calls <code>/api/verify/init</code></span>
-          </li>
-          <li>
-            <span class="step-num">2</span>
-            <span class="step-text">User clicks the link and signs in with Pi</span>
-          </li>
-          <li>
-            <span class="step-num">3</span>
-            <span class="step-text">Auth314 delivers the verified identity to your callback URL</span>
-          </li>
-        </ol>
-      </div>
+      <section class="landing-content">
+        <div class="landing-content-inner">
+          <div class="section">
+            <h2 class="section-title">How it works</h2>
+            <ol class="steps">
+              <li>
+                <span class="step-num">1</span>
+                <span class="step-text">Your bot calls <code>/api/verify/init</code></span>
+              </li>
+              <li>
+                <span class="step-num">2</span>
+                <span class="step-text">User clicks the link and signs in with Pi</span>
+              </li>
+              <li>
+                <span class="step-num">3</span>
+                <span class="step-text">Auth314 delivers the verified identity to your callback URL</span>
+              </li>
+            </ol>
+          </div>
 
-      <div class="section">
-        <h2 class="section-title">Webhook payload</h2>
-        <pre class="code-block"><code><span class="tok-brace">{</span>
+          <div class="section">
+            <h2 class="section-title">Webhook payload</h2>
+            <pre class="code-block"><code><span class="tok-brace">{</span>
   <span class="tok-key">"platform"</span>: <span class="tok-str">"discord"</span>,
   <span class="tok-key">"platform_user_id"</span>: <span class="tok-str">"..."</span>,
   <span class="tok-key">"guild_id"</span>: <span class="tok-str">"..."</span>,
   <span class="tok-key">"pi_uid"</span>: <span class="tok-str">"..."</span>,
   <span class="tok-key">"pi_username"</span>: <span class="tok-str">"..."</span>
 <span class="tok-brace">}</span></code></pre>
-      </div>
+          </div>
+        </div>
+      </section>
 
-      <div class="cta-row">
-        <a
-          class="cta-link"
-          href="https://github.com/Psalm2517/auth314"
-          target="_blank"
-          rel="noopener"
-          >View on GitHub</a
-        >
-      </div>
-
-      <div class="footer">Powered by Auth314</div>
+      <footer class="landing-footer">Powered by Auth314</footer>
     </div>
 
     <!-- verify flow: shown when ?session= is present -->
-    <div id="verify" class="card" style="display: none">
-      <div class="brand">Auth<span>314</span></div>
-      <div class="subtitle">Pi Network verification</div>
+    <div id="verify-shell" class="verify-shell" style="display: none">
+      <div id="verify" class="card">
+        <div class="brand">Auth<span>314</span></div>
+        <div class="subtitle">Pi Network verification</div>
 
-      <!-- ready -->
-      <div id="state-ready" class="state">
-        <h1>Verify your Pi account</h1>
-        <p>Confirm your Pi identity to complete verification for your community.</p>
-        <button id="signin-btn" class="btn">Sign in with Pi</button>
+        <!-- ready -->
+        <div id="state-ready" class="state">
+          <h1>Verify your Pi account</h1>
+          <p>Confirm your Pi identity to complete verification for your community.</p>
+          <button id="signin-btn" class="btn">Sign in with Pi</button>
+        </div>
+
+        <!-- redirecting -->
+        <div id="state-redirecting" class="state">
+          <div class="spinner"></div>
+          <h1>Redirecting…</h1>
+          <p>Taking you to Pi Sign-in.</p>
+        </div>
+
+        <!-- error -->
+        <div id="state-error" class="state">
+          <div class="icon error">✕</div>
+          <h1>Something went wrong</h1>
+          <p id="error-message">This verification link is invalid or has expired.</p>
+        </div>
+
+        <div class="footer">Powered by Auth314</div>
       </div>
-
-      <!-- redirecting -->
-      <div id="state-redirecting" class="state">
-        <div class="spinner"></div>
-        <h1>Redirecting…</h1>
-        <p>Taking you to Pi Sign-in.</p>
-      </div>
-
-      <!-- error -->
-      <div id="state-error" class="state">
-        <div class="icon error">✕</div>
-        <h1>Something went wrong</h1>
-        <p id="error-message">This verification link is invalid or has expired.</p>
-      </div>
-
-      <div class="footer">Powered by Auth314</div>
     </div>
 
     <script src="config.js"></script>
@@ -109,7 +119,7 @@
           return;
         }
 
-        document.getElementById("verify").style.display = "block";
+        document.getElementById("verify-shell").style.display = "flex";
 
         function show(id) {
           var states = document.querySelectorAll("#verify .state");

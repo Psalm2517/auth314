@@ -10,34 +10,36 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="card">
-      <div class="brand">Auth<span>314</span></div>
-      <div class="subtitle">Pi Network verification</div>
+    <div class="verify-shell">
+      <div class="card">
+        <div class="brand">Auth<span>314</span></div>
+        <div class="subtitle">Pi Network verification</div>
 
-      <!-- processing -->
-      <div id="state-processing" class="state active">
-        <div class="spinner"></div>
-        <h1>Verifying…</h1>
-        <p>Confirming your Pi identity.</p>
+        <!-- processing -->
+        <div id="state-processing" class="state active">
+          <div class="spinner"></div>
+          <h1>Verifying…</h1>
+          <p>Confirming your Pi identity.</p>
+        </div>
+
+        <!-- success -->
+        <div id="state-success" class="state">
+          <div class="icon success">✓</div>
+          <h1>Verified!</h1>
+          <p id="success-message">
+            Verification complete. You can close this page.
+          </p>
+        </div>
+
+        <!-- error -->
+        <div id="state-error" class="state">
+          <div class="icon error">✕</div>
+          <h1>Something went wrong</h1>
+          <p id="error-message">Something went wrong. Please try again.</p>
+        </div>
+
+        <div class="footer">Powered by Auth314</div>
       </div>
-
-      <!-- success -->
-      <div id="state-success" class="state">
-        <div class="icon success">✓</div>
-        <h1>Verified!</h1>
-        <p id="success-message">
-          Verification complete. You can close this page.
-        </p>
-      </div>
-
-      <!-- error -->
-      <div id="state-error" class="state">
-        <div class="icon error">✕</div>
-        <h1>Something went wrong</h1>
-        <p id="error-message">Something went wrong. Please try again.</p>
-      </div>
-
-      <div class="footer">Powered by Auth314</div>
     </div>
 
     <script src="config.js"></script>
