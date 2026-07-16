@@ -149,6 +149,20 @@ In your Pi developer settings, register the redirect URI:
 <PORTAL_BASE_URL>/callback.html
 ```
 
+## Tests & CI
+
+Unit tests cover the session/validation logic and the full callback flow
+(one-time use, expiry, Pi verification, identity storage, callback delivery):
+
+```bash
+cd worker
+npm test          # vitest
+npm run typecheck # tsc --noEmit
+```
+
+GitHub Actions (`.github/workflows/ci.yml`) runs both on every push to `main`
+and on pull requests.
+
 ## Local development
 
 ```bash
