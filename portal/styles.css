@@ -121,15 +121,6 @@ p {
   }
 }
 
-.qr-wrap {
-  display: inline-block;
-  background: #ffffff;
-  padding: 12px;
-  border-radius: 12px;
-  margin-top: 12px;
-  line-height: 0;
-}
-
 .icon {
   font-size: 40px;
   line-height: 1;

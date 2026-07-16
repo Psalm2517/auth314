@@ -14,39 +14,18 @@
       <div class="brand">Auth<span>314</span></div>
       <div class="subtitle">Pi Network verification</div>
 
-      <!-- redirecting: shown immediately outside Pi Browser -->
+      <!-- ready -->
+      <div id="state-ready" class="state">
+        <h1>Verify your Pi account</h1>
+        <p>Confirm your Pi identity to complete verification for your community.</p>
+        <button id="signin-btn" class="btn">Sign in with Pi</button>
+      </div>
+
+      <!-- redirecting -->
       <div id="state-redirecting" class="state">
         <div class="spinner"></div>
-        <h1>Opening Pi Browser…</h1>
-        <p>Redirecting you to the Pi Browser to continue.</p>
-      </div>
-
-      <!-- qr: shown if the pi:// redirect didn't navigate away (desktop) -->
-      <div id="state-qr" class="state">
-        <h1>Scan to continue</h1>
-        <p>Scan with your phone to open in Pi Browser.</p>
-        <div class="qr-wrap"><div id="qrcode"></div></div>
-      </div>
-
-      <!-- authenticating: shown inside Pi Browser while authenticate() runs -->
-      <div id="state-authenticating" class="state">
-        <div class="spinner"></div>
-        <h1>Authenticating…</h1>
-        <p>Confirming your Pi identity.</p>
-      </div>
-
-      <!-- processing: shown while POSTing to the Worker -->
-      <div id="state-processing" class="state">
-        <div class="spinner"></div>
-        <h1>Verifying…</h1>
-        <p>Finishing up verification.</p>
-      </div>
-
-      <!-- success -->
-      <div id="state-success" class="state">
-        <div class="icon success">✓</div>
-        <h1>Verified!</h1>
-        <p>Verification complete. You can close this page.</p>
+        <h1>Redirecting…</h1>
+        <p>Taking you to Pi Sign-in.</p>
       </div>
 
       <!-- error -->
@@ -59,23 +38,10 @@
       <div class="footer">Powered by Auth314</div>
     </div>
 
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="config.js"></script>
     <script>
       (function () {
         var cfg = window.AUTH314_CONFIG || {};
-        var authenticateCalled = false;
-
-        // The pi-sdk.js script above defines window.Pi in ANY browser that
-        // loads it — it's just a CDN-hosted library, not something Pi
-        // Browser injects natively. So window.Pi existing is NOT proof of
-        // being inside Pi Browser; it only proves the SDK script loaded.
-        // Pi Browser identifies itself via its user agent, so combine both
-        // checks: real Pi Browser AND a successfully loaded SDK.
-        function isPiBrowser() {
-          return /PiBrowser/i.test(navigator.userAgent);
-        }
 
         function show(id) {
           var states = document.querySelectorAll(".state");
@@ -100,89 +66,32 @@
           return;
         }
 
-        function onIncompletePaymentFound() {
-          // No-op: Auth314 does not process payments.
-        }
+        show("state-ready");
 
-        function submitToWorker(accessToken) {
-          show("state-processing");
-          fetch(cfg.API_BASE_URL.replace(/\/$/, "") + "/api/auth/callback", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ access_token: accessToken, session: session }),
-          })
-            .then(function (res) {
-              return res.json().then(function (data) {
-                return { ok: res.ok, data: data };
-              });
-            })
-            .then(function (result) {
-              if (result.ok) {
-                show("state-success");
-              } else {
-                showError(
-                  (result.data && result.data.error) ||
-                    "Verification could not be completed."
-                );
-              }
-            })
-            .catch(function () {
-              showError("Could not reach the verification service. Please try again.");
-            });
-        }
-
-        function authenticateWithPi() {
-          // Guard against window.Pi.authenticate() being triggered twice
-          // (e.g. a duplicate load event).
-          if (authenticateCalled) return;
-          authenticateCalled = true;
-
-          show("state-authenticating");
-          try {
-            window.Pi.init({ version: "2.0", sandbox: false });
-          } catch (e) {
-            showError("Could not initialize the Pi SDK. Please try again.");
-            return;
-          }
-          window.Pi.authenticate(["username"], onIncompletePaymentFound)
-            .then(function (result) {
-              var accessToken = result && result.accessToken;
-              if (!accessToken) {
-                showError("Pi authentication did not return an access token.");
-                return;
-              }
-              submitToWorker(accessToken);
-            })
-            .catch(function () {
-              showError("Pi authentication failed. Please try again.");
-            });
-        }
-
-        if (isPiBrowser() && window.Pi) {
-          // Inside Pi Browser with the SDK loaded: authenticate immediately,
-          // no redirect needed.
-          authenticateWithPi();
-        } else {
-          // Outside Pi Browser: attempt a pi:// deep link, then fall back to
-          // a QR code if we're still here after 1.5s (e.g. desktop, where the
-          // custom scheme has nothing to hand off to).
+        document.getElementById("signin-btn").addEventListener("click", function () {
           show("state-redirecting");
 
-          var piUrl = window.location.href.replace(/^https:\/\//, "pi://");
-          window.location.href = piUrl;
+          var state = crypto.randomUUID();
+          try {
+            sessionStorage.setItem("pi_oauth_state", state);
+            sessionStorage.setItem("pi_session", session);
+          } catch (e) {
+            showError("This browser is blocking storage needed to complete sign-in.");
+            return;
+          }
 
-          setTimeout(function () {
-            show("state-qr");
-            if (window.QRCode) {
-              // eslint-disable-next-line no-new
-              new QRCode(document.getElementById("qrcode"), {
-                text: piUrl,
-                width: 200,
-                height: 200,
-              });
-            }
-          }, 1500);
-        }
+          var url = new URL(cfg.PI_AUTHORIZE_BASE_URL);
+          url.searchParams.set("response_type", "token");
+          url.searchParams.set("client_id", cfg.PI_OAUTH_CLIENT_ID);
+          url.searchParams.set(
+            "redirect_uri",
+            cfg.PORTAL_BASE_URL.replace(/\/$/, "") + "/callback.html"
+          );
+          url.searchParams.set("scope", "username");
+          url.searchParams.set("state", state);
+
+          window.location.assign(url.toString());
+        });
       })();
     </script>
   </body>

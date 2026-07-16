@@ -12,9 +12,8 @@ binding = "AUTH314_KV"
 id = "883b391ac30c4c618e99c5e725941f83"
 
 # --- Non-secret config variables ---
-# The Pi authorize endpoint is unconfirmed; swap it here without code changes.
 [vars]
-PI_AUTHORIZE_BASE_URL = "https://auth.minepi.com/oauth/authorize"
+PI_AUTHORIZE_BASE_URL = "https://accounts.pinet.com/oauth/authorize"
 PORTAL_BASE_URL = "https://auth314.com"
 
 # --- Secrets (do NOT put these here) ---

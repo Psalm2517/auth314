@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<!--
-  Stub — not part of the current verification flow.
-
-  The portal now uses the Pi Browser SDK (window.Pi.authenticate) with a
-  pi:// deep link / QR fallback (see index.html), so there is no OAuth
-  redirect step and nothing currently links here. This page is kept as-is
-  in case the Pi Sign-in OAuth authorize-endpoint flow is reactivated later,
-  since it still correctly extracts an access_token fragment and posts it
-  to /api/auth/callback.
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -36,14 +26,14 @@
         <div class="icon success">✓</div>
         <h1>Verified!</h1>
         <p id="success-message">
-          Your Pi account is verified. You can return to your community now.
+          Verification complete. You can close this page.
         </p>
       </div>
 
       <!-- error -->
       <div id="state-error" class="state">
         <div class="icon error">✕</div>
-        <h1>Verification failed</h1>
+        <h1>Something went wrong</h1>
         <p id="error-message">Something went wrong. Please try again.</p>
       </div>
 
@@ -68,32 +58,64 @@
           show("state-error");
         }
 
-        function showSuccess(username) {
-          if (username) {
-            document.getElementById("success-message").textContent =
-              "Verified as @" + username + ". You can return to your community now.";
-          }
+        function showSuccess() {
           show("state-success");
         }
 
-        // Extract access_token from the URL fragment (#access_token=...).
-        var fragment = window.location.hash.replace(/^#/, "");
-        var hashParams = new URLSearchParams(fragment);
-        var accessToken = hashParams.get("access_token");
+        var ERROR_MESSAGES = {
+          access_denied: "You declined Pi Sign-in. Please try again.",
+          expired: "Sign-in request timed out. Please try again.",
+          cancelled: "Sign-in was cancelled. Please try again.",
+          server_error: "Pi Sign-in encountered an error. Please try again.",
+        };
 
-        var session = null;
+        var params = new URLSearchParams(window.location.hash.slice(1));
+
+        // Verify CSRF state before trusting anything else in the fragment.
+        var expectedState = null;
         try {
-          session = sessionStorage.getItem("auth314_session");
+          expectedState = sessionStorage.getItem("pi_oauth_state");
+          sessionStorage.removeItem("pi_oauth_state");
         } catch (e) {}
 
+        var returnedState = params.get("state");
+
+        // Clear the token/fragment from the URL immediately so it isn't left
+        // sitting in browser history.
+        history.replaceState(null, "", window.location.pathname);
+
+        if (!expectedState || returnedState !== expectedState) {
+          showError("Sign-in could not be verified (state mismatch). Please try again.");
+          return;
+        }
+
+        var oauthError = params.get("error");
+        if (oauthError) {
+          showError(
+            ERROR_MESSAGES[oauthError] ||
+              "Pi Sign-in failed. Please try again."
+          );
+          return;
+        }
+
+        var accessToken = params.get("access_token");
         if (!accessToken) {
           showError("No access token returned from Pi. Please restart verification.");
           return;
         }
+
+        var session = null;
+        try {
+          session = sessionStorage.getItem("pi_session");
+          sessionStorage.removeItem("pi_session");
+        } catch (e) {}
+
         if (!session) {
           showError("Your verification session was lost. Please restart from your community bot.");
           return;
         }
+
+        show("state-processing");
 
         fetch(cfg.API_BASE_URL.replace(/\/$/, "") + "/api/auth/callback", {
           method: "POST",
@@ -106,13 +128,8 @@
             });
           })
           .then(function (result) {
-            // Clear one-time session regardless of outcome.
-            try {
-              sessionStorage.removeItem("auth314_session");
-            } catch (e) {}
-
             if (result.ok) {
-              showSuccess(result.data && result.data.pi_username);
+              showSuccess();
             } else {
               showError(
                 (result.data && result.data.error) ||
