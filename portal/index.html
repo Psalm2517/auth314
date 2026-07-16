@@ -26,30 +26,41 @@
       <div class="section">
         <h2 class="section-title">How it works</h2>
         <ol class="steps">
-          <li>Your bot calls <code>/api/verify/init</code></li>
-          <li>User clicks the link and signs in with Pi</li>
-          <li>Auth314 delivers the verified identity to your callback URL</li>
+          <li>
+            <span class="step-num">1</span>
+            <span class="step-text">Your bot calls <code>/api/verify/init</code></span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span class="step-text">User clicks the link and signs in with Pi</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span class="step-text">Auth314 delivers the verified identity to your callback URL</span>
+          </li>
         </ol>
       </div>
 
       <div class="section">
         <h2 class="section-title">Webhook payload</h2>
-        <pre class="code-block"><code>{
-  "platform": "discord",
-  "platform_user_id": "...",
-  "guild_id": "...",
-  "pi_uid": "...",
-  "pi_username": "..."
-}</code></pre>
+        <pre class="code-block"><code><span class="tok-brace">{</span>
+  <span class="tok-key">"platform"</span>: <span class="tok-str">"discord"</span>,
+  <span class="tok-key">"platform_user_id"</span>: <span class="tok-str">"..."</span>,
+  <span class="tok-key">"guild_id"</span>: <span class="tok-str">"..."</span>,
+  <span class="tok-key">"pi_uid"</span>: <span class="tok-str">"..."</span>,
+  <span class="tok-key">"pi_username"</span>: <span class="tok-str">"..."</span>
+<span class="tok-brace">}</span></code></pre>
       </div>
 
-      <a
-        class="btn"
-        href="https://github.com/Psalm2517/auth314"
-        target="_blank"
-        rel="noopener"
-        >View on GitHub</a
-      >
+      <div class="cta-row">
+        <a
+          class="cta-link"
+          href="https://github.com/Psalm2517/auth314"
+          target="_blank"
+          rel="noopener"
+          >View on GitHub</a
+        >
+      </div>
 
       <div class="footer">Powered by Auth314</div>
     </div>
