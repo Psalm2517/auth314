@@ -80,15 +80,21 @@
             return;
           }
 
-          var url = new URL(cfg.PI_AUTHORIZE_BASE_URL);
-          url.searchParams.set("response_type", "token");
-          url.searchParams.set("client_id", cfg.PI_OAUTH_CLIENT_ID);
-          url.searchParams.set(
-            "redirect_uri",
-            cfg.PORTAL_BASE_URL.replace(/\/$/, "") + "/callback.html"
-          );
-          url.searchParams.set("scope", "username");
-          url.searchParams.set("state", state);
+          var url;
+          try {
+            url = new URL(cfg.PI_AUTHORIZE_BASE_URL);
+            url.searchParams.set("response_type", "token");
+            url.searchParams.set("client_id", cfg.PI_OAUTH_CLIENT_ID);
+            url.searchParams.set(
+              "redirect_uri",
+              cfg.PORTAL_BASE_URL.replace(/\/$/, "") + "/callback.html"
+            );
+            url.searchParams.set("scope", "username");
+            url.searchParams.set("state", state);
+          } catch (e) {
+            showError("Portal configuration is invalid. Please contact support.");
+            return;
+          }
 
           window.location.assign(url.toString());
         });
