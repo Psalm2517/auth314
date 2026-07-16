@@ -59,12 +59,23 @@
       <div class="footer">Powered by Auth314</div>
     </div>
 
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="config.js"></script>
     <script>
       (function () {
         var cfg = window.AUTH314_CONFIG || {};
         var authenticateCalled = false;
+
+        // The pi-sdk.js script above defines window.Pi in ANY browser that
+        // loads it — it's just a CDN-hosted library, not something Pi
+        // Browser injects natively. So window.Pi existing is NOT proof of
+        // being inside Pi Browser; it only proves the SDK script loaded.
+        // Pi Browser identifies itself via its user agent, so combine both
+        // checks: real Pi Browser AND a successfully loaded SDK.
+        function isPiBrowser() {
+          return /PiBrowser/i.test(navigator.userAgent);
+        }
 
         function show(id) {
           var states = document.querySelectorAll(".state");
@@ -127,6 +138,12 @@
           authenticateCalled = true;
 
           show("state-authenticating");
+          try {
+            window.Pi.init({ version: "2.0", sandbox: false });
+          } catch (e) {
+            showError("Could not initialize the Pi SDK. Please try again.");
+            return;
+          }
           window.Pi.authenticate(["username"], onIncompletePaymentFound)
             .then(function (result) {
               var accessToken = result && result.accessToken;
@@ -141,8 +158,9 @@
             });
         }
 
-        if (window.Pi) {
-          // Inside Pi Browser: authenticate immediately, no redirect needed.
+        if (isPiBrowser() && window.Pi) {
+          // Inside Pi Browser with the SDK loaded: authenticate immediately,
+          // no redirect needed.
           authenticateWithPi();
         } else {
           // Outside Pi Browser: attempt a pi:// deep link, then fall back to
