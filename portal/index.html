@@ -6,11 +6,56 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
     />
-    <title>Auth314 — Pi Sign-in</title>
+    <title>Auth314 - Pi Sign-in</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="card">
+    <!-- landing: shown when no ?session= param is present -->
+    <div id="landing" class="card landing" style="display: none">
+      <div class="brand">Auth<span>314</span></div>
+      <div class="subtitle">Pi Network verification</div>
+
+      <h1 class="landing-headline">
+        Pi Network verification for Discord, Telegram, and beyond.
+      </h1>
+      <p class="landing-desc">
+        Auth314 connects Pi Network identity to community platforms. Verify
+        once with Pi Sign-in, get access everywhere.
+      </p>
+
+      <div class="section">
+        <h2 class="section-title">How it works</h2>
+        <ol class="steps">
+          <li>Your bot calls <code>/api/verify/init</code></li>
+          <li>User clicks the link and signs in with Pi</li>
+          <li>Auth314 delivers the verified identity to your callback URL</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Webhook payload</h2>
+        <pre class="code-block"><code>{
+  "platform": "discord",
+  "platform_user_id": "...",
+  "guild_id": "...",
+  "pi_uid": "...",
+  "pi_username": "..."
+}</code></pre>
+      </div>
+
+      <a
+        class="btn"
+        href="https://github.com/Psalm2517/auth314"
+        target="_blank"
+        rel="noopener"
+        >View on GitHub</a
+      >
+
+      <div class="footer">Powered by Auth314</div>
+    </div>
+
+    <!-- verify flow: shown when ?session= is present -->
+    <div id="verify" class="card" style="display: none">
       <div class="brand">Auth<span>314</span></div>
       <div class="subtitle">Pi Network verification</div>
 
@@ -43,8 +88,20 @@
       (function () {
         var cfg = window.AUTH314_CONFIG || {};
 
+        var params = new URLSearchParams(window.location.search);
+        var session = params.get("session");
+
+        if (!session) {
+          // No session param: show the landing page, skip the verify flow
+          // entirely.
+          document.getElementById("landing").style.display = "block";
+          return;
+        }
+
+        document.getElementById("verify").style.display = "block";
+
         function show(id) {
-          var states = document.querySelectorAll(".state");
+          var states = document.querySelectorAll("#verify .state");
           for (var i = 0; i < states.length; i++) {
             states[i].classList.remove("active");
           }
@@ -56,14 +113,6 @@
             document.getElementById("error-message").textContent = msg;
           }
           show("state-error");
-        }
-
-        var params = new URLSearchParams(window.location.search);
-        var session = params.get("session");
-
-        if (!session) {
-          showError("No verification session found. Please use the link from your community bot.");
-          return;
         }
 
         show("state-ready");
