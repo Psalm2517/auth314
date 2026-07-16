@@ -4,14 +4,14 @@
 // secrets). Edit them for your deployment, or generate this file at deploy time.
 window.AUTH314_CONFIG = {
   // Cloudflare Worker API base URL (no trailing slash).
-  API_BASE_URL: "https://auth314.workers.dev",
+  API_BASE_URL: "https://api.auth314.com",
 
   // Pi OAuth client id.
-  PI_OAUTH_CLIENT_ID: "REPLACE_WITH_PI_OAUTH_CLIENT_ID",
+  PI_OAUTH_CLIENT_ID: "30XoECv68xupayqApaev4rypRZ4jxMYl8OVO15ZaDSE",
 
   // Pi authorize endpoint — unconfirmed, easy to swap.
   PI_AUTHORIZE_BASE_URL: "https://auth.minepi.com/oauth/authorize",
 
   // This portal's own base URL (used to build the OAuth redirect_uri).
-  PORTAL_BASE_URL: "https://auth314.pages.dev",
+  PORTAL_BASE_URL: "https://auth314.com",
 };
