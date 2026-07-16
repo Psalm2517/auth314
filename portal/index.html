@@ -74,7 +74,13 @@
         show("state-ready");
 
         document.getElementById("verify-btn").addEventListener("click", function () {
-          var redirectUri = cfg.PORTAL_BASE_URL.replace(/\/$/, "") + "/callback.html";
+          // Use the current origin so the OAuth round-trip stays same-origin
+          // (sessionStorage must survive it). Works on both the production
+          // domain and the auth314.pages.dev dev URL without config changes.
+          // Register BOTH callback URLs in the Pi Developer Portal:
+          //   https://auth314.com/callback.html
+          //   https://auth314.pages.dev/callback.html
+          var redirectUri = window.location.origin + "/callback.html";
           var url =
             cfg.PI_AUTHORIZE_BASE_URL +
             "?client_id=" +
