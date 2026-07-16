@@ -15,15 +15,15 @@ export default {
     const { pathname } = url;
     const method = request.method;
 
-    if (pathname === "/api/health" && method === "GET") {
+    if (pathname === "/health" && method === "GET") {
       return handleHealth();
     }
 
-    if (pathname === "/api/verify/init" && method === "POST") {
+    if (pathname === "/verify/init" && method === "POST") {
       return handleVerifyInit(request, env);
     }
 
-    if (pathname === "/api/auth/callback" && method === "POST") {
+    if (pathname === "/auth/callback" && method === "POST") {
       return handleAuthCallback(request, env);
     }
 

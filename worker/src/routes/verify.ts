@@ -12,7 +12,7 @@ interface VerifyInitBody {
 }
 
 /**
- * POST /api/verify/init
+ * POST /verify/init
  * Called by platform integrations to start a verification session.
  */
 export async function handleVerifyInit(

@@ -6,7 +6,7 @@ import { makeEnv } from "./helpers";
 import type { Env, SessionRecord } from "../src/types";
 
 function post(body: unknown): Request {
-  return new Request("https://api.example/api/auth/callback", {
+  return new Request("https://api.example/auth/callback", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -43,7 +43,7 @@ function mockHappyFetch() {
   });
 }
 
-describe("POST /api/auth/callback", () => {
+describe("POST /auth/callback", () => {
   beforeEach(() => {
     vi.stubGlobal("fetch", mockHappyFetch());
   });

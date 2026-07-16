@@ -10,7 +10,7 @@ interface AuthCallbackBody {
 }
 
 /**
- * POST /api/auth/callback
+ * POST /auth/callback
  * Called by the portal after extracting the access token from the OAuth
  * redirect fragment.
  */

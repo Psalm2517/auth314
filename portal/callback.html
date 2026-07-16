@@ -117,7 +117,7 @@
 
         show("state-processing");
 
-        fetch(cfg.API_BASE_URL.replace(/\/$/, "") + "/api/auth/callback", {
+        fetch(cfg.API_BASE_URL.replace(/\/$/, "") + "/auth/callback", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ access_token: accessToken, session: session }),

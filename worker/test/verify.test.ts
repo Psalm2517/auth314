@@ -4,14 +4,14 @@ import { getSession } from "../src/lib/kv";
 import { makeEnv } from "./helpers";
 
 function post(body: unknown): Request {
-  return new Request("https://api.example/api/verify/init", {
+  return new Request("https://api.example/verify/init", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
 }
 
-describe("POST /api/verify/init validation", () => {
+describe("POST /verify/init validation", () => {
   it("rejects an unknown platform", async () => {
     const res = await handleVerifyInit(
       post({
@@ -57,7 +57,7 @@ describe("POST /api/verify/init validation", () => {
   });
 
   it("rejects an invalid JSON body", async () => {
-    const req = new Request("https://api.example/api/verify/init", {
+    const req = new Request("https://api.example/verify/init", {
       method: "POST",
       body: "{not json",
     });
