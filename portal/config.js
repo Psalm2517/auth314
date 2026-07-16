@@ -4,7 +4,7 @@
 // secrets). Edit them for your deployment, or generate this file at deploy time.
 window.AUTH314_CONFIG = {
   // Cloudflare Worker API base URL (no trailing slash).
-  API_BASE_URL: "https://auth314-worker.example.workers.dev",
+  API_BASE_URL: "https://auth314.example.workers.dev",
 
   // Pi OAuth client id.
   PI_OAUTH_CLIENT_ID: "REPLACE_WITH_PI_OAUTH_CLIENT_ID",

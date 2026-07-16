@@ -1,5 +1,5 @@
 # Cloudflare Worker configuration for the Auth314 core service.
-name = "auth314-worker"
+name = "auth314"
 main = "worker/src/index.ts"
 compatibility_date = "2024-06-01"
 
@@ -9,7 +9,9 @@ compatibility_date = "2024-06-01"
 # then paste the returned id below (and a preview id for `wrangler dev`).
 [[kv_namespaces]]
 binding = "AUTH314_KV"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "883b391ac30c4c618e99c5e725941f83"
+# Create a separate preview namespace for `wrangler dev` and paste its id here:
+#   wrangler kv:namespace create AUTH314_KV --preview
 preview_id = "REPLACE_WITH_KV_PREVIEW_NAMESPACE_ID"
 
 # --- Non-secret config variables ---
