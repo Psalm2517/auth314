@@ -7,7 +7,7 @@ window.AUTH314_CONFIG = {
   API_BASE_URL: "https://api.auth314.com",
 
   // Pi OAuth client id, from the Pi Developer Portal.
-  PI_OAUTH_CLIENT_ID: "30XoECv68xupayqApaev4rypRZ4jxMYl8OVO15ZaDSE",
+  PI_OAUTH_CLIENT_ID: "30XoECv68xupayqApaev4rypRZ4JxMYl8OVO15ZaDSE",
 
   // Pi Sign-in OAuth authorize endpoint (confirmed, per Pi's pi-sign-in.md).
   PI_AUTHORIZE_BASE_URL: "https://accounts.pinet.com/oauth/authorize",
