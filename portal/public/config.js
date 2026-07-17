@@ -5,7 +5,7 @@
 // can be edited without a rebuild.
 window.AUTH314_CONFIG = {
   // Cloudflare Worker API base URL (no trailing slash).
-  API_BASE_URL: "https://api.auth314.com",
+  API_BASE_URL: "https://app.auth314.com",
 
   // Pi OAuth client id, from the Pi Developer Portal.
   PI_OAUTH_CLIENT_ID: "30XoECv68xupayqApaev4rypRZ4JxMYl8OVO15ZaDSE",
