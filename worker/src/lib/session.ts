@@ -42,7 +42,7 @@ export async function createSession(
     expires_at: expiresAt,
     used: false,
     key_id: input.key_id,
-    owner_discord_user_id: input.owner_discord_user_id,
+    owner_id: input.owner_id,
   };
   await putSession(env, token, record);
   return { token, record };
