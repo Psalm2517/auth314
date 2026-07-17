@@ -26,7 +26,13 @@ const GITHUB_URL = "https://github.com/Psalm2517/auth314";
 
 export function Landing() {
   return (
-    <div className="min-h-full">
+    <div
+      className="min-h-full"
+      style={{
+        background:
+          "linear-gradient(180deg, #131415 0%, var(--background) 420px)",
+      }}
+    >
       <header className="border-b border-border">
         <div className="mx-auto flex max-w-[1080px] items-center justify-between px-8 py-5">
           <Brand className="text-lg font-bold tracking-tight" />
@@ -45,15 +51,29 @@ export function Landing() {
       <section className="relative overflow-hidden border-b border-border">
         <div
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-[-260px] h-[520px] w-[900px] -translate-x-1/2 rounded-full"
+          className="pointer-events-none absolute left-1/2 top-[-320px] h-[620px] w-[1100px] -translate-x-1/2 rounded-full"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(232,232,233,0.10) 0%, rgba(232,232,233,0.03) 45%, rgba(232,232,233,0) 70%)",
+              "radial-gradient(ellipse at center, rgba(232,232,233,0.14) 0%, rgba(232,232,233,0.05) 40%, rgba(232,232,233,0) 68%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-[-120px] h-[360px] w-[560px] -translate-x-1/2 rounded-full"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 70%)",
           }}
         />
         <div className="relative mx-auto max-w-[680px] px-8 py-24 text-center">
           <Badge className="mb-5">In development, not yet publicly available</Badge>
-          <h1 className="mb-4 text-[40px] font-bold leading-[1.25] tracking-tight">
+          <h1
+            className="mb-4 bg-clip-text text-[40px] font-bold leading-[1.25] tracking-tight text-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(180deg, #ffffff 0%, #c7c7c9 100%)",
+            }}
+          >
             Pi Sign-in, made simple.
           </h1>
           <p className="mx-auto mb-8 max-w-[500px] text-[17px] text-muted-foreground">
