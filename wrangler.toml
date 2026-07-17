@@ -19,6 +19,10 @@ PI_AUTHORIZE_BASE_URL = "https://accounts.pinet.com/oauth/authorize"
 # verify_url from this.
 PORTAL_BASE_URL = "https://app.auth314.com"
 
+# --- Static assets (portal UI) ---
+[assets]
+directory = "./portal/dist"
+
 # --- Secrets (do NOT put these here) ---
 # Set with:
 #   wrangler secret put PI_OAUTH_CLIENT_ID
