@@ -80,7 +80,7 @@ export function Verify() {
       url.searchParams.set("client_id", cfg.PI_OAUTH_CLIENT_ID);
       url.searchParams.set(
         "redirect_uri",
-        cfg.PORTAL_BASE_URL.replace(/\/$/, "") + "/callback.html",
+        cfg.CALLBACK_BASE_URL.replace(/\/$/, "") + "/callback.html",
       );
       url.searchParams.set("scope", "username");
       url.searchParams.set("state", oauthState);

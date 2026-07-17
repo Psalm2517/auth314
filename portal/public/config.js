@@ -13,8 +13,10 @@ window.AUTH314_CONFIG = {
   // Pi Sign-in OAuth authorize endpoint (confirmed, per Pi's pi-sign-in.md).
   PI_AUTHORIZE_BASE_URL: "https://accounts.pinet.com/oauth/authorize",
 
-  // This portal's own production base URL. This app now hosts only the
-  // Pi sign-in / callback flow (app.auth314.com); the marketing landing
-  // page lives in the separate auth314-web repo, at auth314.com.
+  // Base URL for verify links sent to users (app.auth314.com looks better).
   PORTAL_BASE_URL: "https://app.auth314.com",
+
+  // Base URL for the Pi OAuth redirect_uri. Must match the domain Pi verified
+  // (auth314.com). The callback page lives at auth314.com/callback.html.
+  CALLBACK_BASE_URL: "https://auth314.com",
 };
