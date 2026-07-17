@@ -61,11 +61,13 @@ export function PrivacyPolicy() {
 
             <h3 className="mt-4 mb-1 font-semibold text-foreground">Dashboard users (developers and operators)</h3>
             <p>
-              Currently, logging in to dashboard.auth314.com requires a Discord account. Auth314 receives
-              your Discord user ID, username, and avatar from Discord at login time. A session
-              cookie (<Code>auth314_dash</Code>) is stored in your browser to keep you signed in for up
-              to 7 days, subject to your browser's cookie settings. Your API keys (names, creation
-              timestamps, usage counters) are stored and associated with your Discord user ID.
+              dashboard.auth314.com supports login via Discord or Pi Network. For Discord login, Auth314
+              receives your Discord user ID, username, and avatar from Discord at login time. For Pi
+              login, Auth314 receives your Pi Network user ID and username through the same Pi Sign-in
+              flow described above -- stored internally and used only to identify your dashboard account.
+              A session cookie (<Code>auth314_dash</Code>) is stored in your browser to keep you signed
+              in for up to 7 days, subject to your browser's cookie settings. Your API keys (names,
+              creation timestamps, usage counters) are stored and associated with your account.
             </p>
 
             <h3 className="mt-4 mb-1 font-semibold text-foreground">Auth314 Discord bot (hosted version)</h3>
@@ -110,7 +112,9 @@ export function PrivacyPolicy() {
             <h2 className="mb-2 text-base font-semibold text-foreground">5. Data sharing</h2>
             <p className="mb-3">
               Auth314 does not sell, rent, or share personal data with third parties for commercial
-              purposes. The only external services contacted are:
+              purposes. Per Pi Network's Developer Terms of Use, Pi user IDs and usernames are never
+              forwarded to third-party integrations (Discord bots, webhooks, etc.) -- only a verified
+              success signal is delivered. The only external services contacted are:
             </p>
             <ul className="list-disc pl-5 space-y-1.5">
               <li>
@@ -119,7 +123,7 @@ export function PrivacyPolicy() {
               </li>
               <li>
                 <strong className="text-foreground">Discord</strong> -- to authenticate dashboard users
-                (Discord's privacy policy governs that interaction).
+                who choose Discord login (Discord's privacy policy governs that interaction).
               </li>
               <li>
                 <strong className="text-foreground">Cloudflare</strong> -- Auth314 runs on Cloudflare's

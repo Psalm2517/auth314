@@ -1,6 +1,6 @@
 import type { Env, IdentityRecord } from "../types";
 import { error, json } from "../lib/http";
-import { getSession, markSessionUsed, putIdentity } from "../lib/kv";
+import { getSession, markSessionUsed, putIdentity, getIdentity } from "../lib/kv";
 import { isSessionExpired } from "../lib/session";
 import { fetchPiMe, PiApiError } from "../lib/pi";
 import { logVerification } from "../lib/verlog";
@@ -51,25 +51,57 @@ export async function handleAuthCallback(
     );
   }
 
-  // 4. Store identity mapping in KV.
+  // 4. 1-to-1 enforcement: if this Pi UID already has a verified association
+  // with a different platform user or guild, revoke the old one first.
+  const existing = await getIdentity(env, me.uid);
+  if (
+    existing &&
+    existing.callback_url &&
+    (existing.platform_user_id !== record.platform_user_id ||
+      existing.guild_id !== record.guild_id ||
+      existing.platform !== record.platform)
+  ) {
+    // Fire revocation to the old integration (fire-and-forget -- a failed
+    // revocation must not block the new verification).
+    fetch(existing.callback_url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        platform_user_id: existing.platform_user_id,
+        guild_id: existing.guild_id,
+        verified: false,
+      }),
+    }).catch(() => {});
+  }
+
+  // 5. Store updated identity mapping in KV.
   const identity: IdentityRecord = {
     pi_uid: me.uid,
     pi_username: me.username,
     platform: record.platform,
     platform_user_id: record.platform_user_id,
+    guild_id: record.guild_id,
+    callback_url: record.callback_url,
     verified_at: new Date().toISOString(),
   };
   await putIdentity(env, identity);
 
-  // 5. POST the result to the integration's callback_url. Pi identity
-  // (pi_uid, pi_username) stays internal to Auth314 and is never sent to
-  // third-party integrations -- only a verified signal, tied back to the
-  // platform_user_id/guild_id the integration already knows.
-  const callbackPayload = {
+  // 6. POST the result to the integration's callback_url.
+  //
+  // Pi identity (pi_uid, pi_username) is never sent to third-party
+  // integrations per Pi Developer ToS §4. The "dashboard" platform is
+  // Auth314's own internal infrastructure, so pi identity is included there.
+  const callbackPayload: Record<string, unknown> = {
     platform_user_id: record.platform_user_id,
     guild_id: record.guild_id,
     verified: true,
   };
+
+  const isDashboard = record.platform === "dashboard";
+  if (isDashboard) {
+    callbackPayload.pi_uid = me.uid;
+    callbackPayload.pi_username = me.username;
+  }
 
   try {
     const cbRes = await fetch(record.callback_url, {
@@ -90,17 +122,30 @@ export async function handleAuthCallback(
     );
   }
 
-  // 6. Log the verification (fire and forget).
-  logVerification(env, record.owner_discord_user_id, {
-    timestamp: new Date().toISOString(),
-    platform: record.platform,
-    guild_id: record.guild_id,
-    platform_user_id: record.platform_user_id,
-    key_id: record.key_id,
-    key_name: "",
-  }).catch(() => {});
+  // 7. Log the verification (skip for dashboard logins -- no operator to log to).
+  if (!isDashboard) {
+    logVerification(env, record.owner_discord_user_id, {
+      timestamp: new Date().toISOString(),
+      platform: record.platform,
+      guild_id: record.guild_id,
+      platform_user_id: record.platform_user_id,
+      key_id: record.key_id,
+      key_name: "",
+    }).catch(() => {});
+  }
 
-  // 7. Return success to the portal.
+  // 8. For dashboard logins, tell the portal where to send the user so they
+  // land back on the dashboard with their session cookie set.
+  if (isDashboard) {
+    const dashboardOrigin = new URL(record.callback_url).origin;
+    return json({
+      status: "verified",
+      platform: record.platform,
+      redirect_url: `${dashboardOrigin}/auth/pi/confirm?nonce=${encodeURIComponent(record.platform_user_id)}`,
+    });
+  }
+
+  // 9. Return success to the portal.
   return json({
     status: "verified",
     pi_username: me.username,

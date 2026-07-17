@@ -27,6 +27,8 @@ export interface IdentityRecord {
   pi_username: string;
   platform: Platform;
   platform_user_id: string;
+  guild_id: string;
+  callback_url: string;
   verified_at: string; // ISO 8601
 }
 

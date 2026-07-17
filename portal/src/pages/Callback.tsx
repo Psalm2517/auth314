@@ -92,7 +92,12 @@ export function Callback() {
       })
       .then((result) => {
         if (result.ok) {
-          setState("success");
+          const redirectUrl = (result.data as { redirect_url?: string })?.redirect_url;
+          if (redirectUrl) {
+            window.location.replace(redirectUrl);
+          } else {
+            setState("success");
+          }
         } else {
           fail(
             (result.data as { error?: string })?.error ??

@@ -46,9 +46,9 @@ export function TermsOfService() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">3. Accounts and API keys</h2>
             <p className="mb-3">
-              Currently, accessing the dashboard requires a Discord account. You are responsible for
-              keeping your API keys confidential. Do not share keys publicly, commit them to public
-              repositories, or allow unauthorized parties to use them.
+              The dashboard can be accessed using a Discord account or a Pi Network account. You are
+              responsible for keeping your API keys confidential. Do not share keys publicly, commit
+              them to public repositories, or allow unauthorized parties to use them.
             </p>
             <p>
               API keys are shown once at creation. Auth314 cannot recover them. If a key is compromised,
@@ -68,6 +68,7 @@ export function TermsOfService() {
               <li>Resell or sublicense Auth314 services without written permission.</li>
               <li>Reverse-engineer, scrape, or attempt to access internal APIs not documented publicly.</li>
               <li>Use Auth314 in a way that violates Pi Network's own terms of service.</li>
+              <li>Attempt to associate a single Pi account with multiple platform users simultaneously. Auth314 enforces a one-to-one relationship and will automatically revoke the previous association when a Pi account re-verifies with a new platform identity.</li>
             </ul>
           </section>
 
