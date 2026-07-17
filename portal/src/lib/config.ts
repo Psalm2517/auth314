@@ -3,7 +3,6 @@ export interface Auth314Config {
   PI_OAUTH_CLIENT_ID: string;
   PI_AUTHORIZE_BASE_URL: string;
   PORTAL_BASE_URL: string;
-  CALLBACK_BASE_URL: string;
 }
 
 declare global {
@@ -21,7 +20,6 @@ export function getConfig(): Auth314Config {
       PI_OAUTH_CLIENT_ID: "",
       PI_AUTHORIZE_BASE_URL: "",
       PORTAL_BASE_URL: "",
-      CALLBACK_BASE_URL: "",
     }
   );
 }
