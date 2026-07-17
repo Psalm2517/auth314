@@ -19,10 +19,15 @@ export async function handleVerifyInit(
   req: Request,
   env: Env,
 ): Promise<Response> {
-  const apiKey = await validateApiKey(env, req);
-  if (!apiKey) {
+  const keyResult = await validateApiKey(env, req);
+  if (!keyResult.ok) {
+    if (keyResult.reason === "rate_limited") return error("Rate limit exceeded", 429);
+    if (keyResult.reason === "quota_exceeded") {
+      return error("Monthly verification quota exceeded. Contact hello@auth314.com for higher limits.", 429);
+    }
     return error("Invalid or missing API key", 401);
   }
+  const apiKey = keyResult.record;
 
   let body: VerifyInitBody;
   try {
