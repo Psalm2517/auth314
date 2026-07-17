@@ -176,7 +176,7 @@ export function Landing() {
       <footer className="mx-auto max-w-[1080px] px-8 py-10 text-center text-xs text-muted-foreground">
         <p>Powered by Auth314</p>
         <p className="mt-1">
-          &copy; 2026 Auth314 &middot; a Yerette Group project &middot;{" "}
+          &copy; 2026 Auth314 &middot; Yerette Group &middot;{" "}
           <a href="/privacy.html" className="underline hover:text-foreground">
             Privacy
           </a>
