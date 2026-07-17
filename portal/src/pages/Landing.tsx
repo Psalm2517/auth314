@@ -173,6 +173,61 @@ export function Landing() {
         </div>
       </section>
 
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-[680px] px-8 py-16">
+          <h2 className="mb-2 text-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            Pricing
+          </h2>
+          <p className="mx-auto mb-10 max-w-[440px] text-center text-sm text-muted-foreground">
+            Free while Auth314 is in development. Paid tiers are planned once
+            it's out of beta.
+          </p>
+          <div className="rounded-lg border border-border bg-card p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-sm font-bold">Free tier</span>
+              <Badge className="px-2.5 py-0.5 text-[10px]">Currently the only tier</Badge>
+            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>1,000 verifications / month</li>
+              <li>20 requests / minute</li>
+              <li>1 API key</li>
+            </ul>
+          </div>
+          <p className="mt-6 text-center text-xs text-muted-foreground">
+            Need higher limits? Email{" "}
+            <a
+              href="mailto:hello@auth314.com"
+              className="underline hover:text-foreground"
+            >
+              hello@auth314.com
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-[680px] px-8 py-16">
+          <h2 className="mb-10 text-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            What's planned
+          </h2>
+          <ul className="space-y-4">
+            {[
+              "Paid tiers with higher rate limits and quotas",
+              "Telegram integration",
+              "Web OAuth (\"Sign in with Auth314\") for website integrations",
+              "Hosted Discord bot",
+              "Multiple API keys and per-key scoping",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm">
+                <Badge className="mt-0.5 flex-none px-2.5 py-0.5 text-[10px]">Planned</Badge>
+                <span className="text-muted-foreground">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <footer className="mx-auto max-w-[1080px] px-8 py-10 text-center text-xs text-muted-foreground">
         <p>Powered by Auth314</p>
         <p className="mt-1">
