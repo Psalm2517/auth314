@@ -1,0 +1,130 @@
+import { Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Brand } from "@/components/Brand";
+
+const STEPS = [
+  {
+    n: 1,
+    text: (
+      <>
+        Your app calls{" "}
+        <code className="rounded border border-border bg-background px-1.5 py-0.5 font-mono text-[13px]">
+          /verify/init
+        </code>
+      </>
+    ),
+  },
+  { n: 2, text: "User clicks the link and signs in with Pi" },
+  {
+    n: 3,
+    text: "Auth314 delivers the verified identity to your callback URL",
+  },
+];
+
+const GITHUB_URL = "https://github.com/Psalm2517/auth314";
+
+export function Landing() {
+  return (
+    <div className="min-h-full">
+      <header className="border-b border-border">
+        <div className="mx-auto flex max-w-[1080px] items-center justify-between px-8 py-5">
+          <Brand className="text-lg font-bold tracking-tight" />
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
+          >
+            <Github className="h-4 w-4" />
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <section className="relative overflow-hidden border-b border-border">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-[-260px] h-[520px] w-[900px] -translate-x-1/2 rounded-full"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(232,232,233,0.10) 0%, rgba(232,232,233,0.03) 45%, rgba(232,232,233,0) 70%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-[680px] px-8 py-24 text-center">
+          <Badge className="mb-5">In development, not yet publicly available</Badge>
+          <h1 className="mb-4 text-[40px] font-bold leading-[1.25] tracking-tight">
+            Pi Sign-in, made simple.
+          </h1>
+          <p className="mx-auto mb-8 max-w-[500px] text-[17px] text-muted-foreground">
+            Auth314 handles the Pi Sign-in OAuth flow so you don't have to.
+            Get a verified signal delivered to your webhook, no Pi Developer
+            Portal app and no OAuth to build.
+          </p>
+          <Button asChild size="pill">
+            <a href={GITHUB_URL} target="_blank" rel="noopener">
+              View on GitHub
+            </a>
+          </Button>
+        </div>
+      </section>
+
+      <section>
+        <div className="mx-auto max-w-[1080px] px-8 py-16">
+          <div className="grid grid-cols-1 gap-16 md:grid-cols-2">
+            <div>
+              <h2 className="mb-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                How it works
+              </h2>
+              <ol className="space-y-3.5">
+                {STEPS.map((step) => (
+                  <li key={step.n} className="flex items-baseline gap-3 text-sm">
+                    <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full border border-border bg-background text-[11px] font-bold text-muted-foreground">
+                      {step.n}
+                    </span>
+                    <span className="pt-px">{step.text}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div>
+              <h2 className="mb-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                Webhook payload
+              </h2>
+              <pre className="overflow-x-auto rounded-md border border-border bg-background p-4 font-mono text-[12.5px] leading-[1.6]">
+                <code>
+                  <span className="text-muted-foreground">{"{"}</span>
+                  {"\n  "}
+                  <span className="text-[#8ab4f8]">"platform_user_id"</span>
+                  {": "}
+                  <span className="text-[#a8cc8c]">"..."</span>
+                  {","}
+                  {"\n  "}
+                  <span className="text-[#8ab4f8]">"guild_id"</span>
+                  {": "}
+                  <span className="text-[#a8cc8c]">"..."</span>
+                  {","}
+                  {"\n  "}
+                  <span className="text-[#8ab4f8]">"verified"</span>
+                  {": "}
+                  <span className="text-[#d7ba7d]">true</span>
+                  {"\n"}
+                  <span className="text-muted-foreground">{"}"}</span>
+                </code>
+              </pre>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Pi identity (uid, username) stays internal to Auth314 and is
+                never included in the webhook payload.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="mx-auto max-w-[1080px] px-8 py-10 text-center text-xs text-muted-foreground">
+        Powered by Auth314
+      </footer>
+    </div>
+  );
+}

@@ -1,7 +1,8 @@
 // Auth314 portal configuration.
 //
 // These values are PUBLIC. Edit them for your deployment, or generate this
-// file at deploy time.
+// file at deploy time. Loaded at runtime (not baked into the build), so it
+// can be edited without a rebuild.
 window.AUTH314_CONFIG = {
   // Cloudflare Worker API base URL (no trailing slash).
   API_BASE_URL: "https://api.auth314.com",
