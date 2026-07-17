@@ -1,6 +1,6 @@
 import type { Env } from "./types";
 import { error, preflight } from "./lib/http";
-import { handleVerifyInit } from "./routes/verify";
+import { handleVerifyInit, handleVerifyStatus } from "./routes/verify";
 import { handleAuthCallback } from "./routes/callback";
 import { handleHealth } from "./routes/health";
 
@@ -21,6 +21,10 @@ export default {
 
     if (pathname === "/verify/init" && method === "POST") {
       return handleVerifyInit(request, env);
+    }
+
+    if (pathname === "/verify/status" && method === "GET") {
+      return handleVerifyStatus(request, env);
     }
 
     if (pathname === "/auth/callback" && method === "POST") {

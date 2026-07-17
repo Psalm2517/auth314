@@ -1,11 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/Spinner";
 import { Brand } from "@/components/Brand";
 import { getConfig } from "@/lib/config";
 
-type State = "ready" | "redirecting" | "error";
+type State = "checking" | "ready" | "redirecting" | "error";
 
 export function Verify() {
   const session = useMemo(
@@ -13,17 +13,50 @@ export function Verify() {
     [],
   );
 
-  const [state, setState] = useState<State>(session ? "ready" : "error");
+  const [state, setState] = useState<State>(session ? "checking" : "error");
   const [errorMessage, setErrorMessage] = useState(
     session
       ? ""
       : "No verification session found. Please use the link from your community bot.",
   );
+  const checkedRef = useRef(false);
 
   function fail(message: string) {
     setErrorMessage(message);
     setState("error");
   }
+
+  useEffect(() => {
+    if (!session || checkedRef.current) return;
+    checkedRef.current = true;
+
+    const cfg = getConfig();
+    let base: string;
+    try {
+      base = cfg.API_BASE_URL.replace(/\/$/, "");
+      if (!base) throw new Error("empty base url");
+    } catch {
+      fail("Portal configuration is invalid. Please contact support.");
+      return;
+    }
+
+    fetch(`${base}/verify/status?session=${encodeURIComponent(session)}`)
+      .then(async (res) => {
+        if (res.ok) {
+          setState("ready");
+          return;
+        }
+        const data = await res.json().catch(() => ({}));
+        fail(
+          (data as { error?: string }).error ??
+            "This verification link is invalid or has expired.",
+        );
+      })
+      .catch(() => {
+        fail("Could not reach the verification service. Please try again.");
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
 
   function handleSignIn() {
     if (!session) return;
@@ -66,6 +99,18 @@ export function Verify() {
         <p className="mb-6 text-sm text-muted-foreground">
           Pi Network verification
         </p>
+
+        {state === "checking" && (
+          <div>
+            <Spinner />
+            <h1 className="mb-2 mt-3 text-lg font-semibold">
+              Checking your link…
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Confirming this verification link is still valid.
+            </p>
+          </div>
+        )}
 
         {state === "ready" && (
           <div>

@@ -1,11 +1,12 @@
-import { Github, MessageCircle, Send, Globe, Sparkles } from "lucide-react";
+import { Github, Globe, Sparkles } from "lucide-react";
+import { SiDiscord, SiTelegram } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Brand } from "@/components/Brand";
 
 const PLATFORMS = [
-  { icon: MessageCircle, name: "Discord" },
-  { icon: Send, name: "Telegram" },
+  { icon: SiDiscord, name: "Discord" },
+  { icon: SiTelegram, name: "Telegram" },
   { icon: Globe, name: "Websites" },
   { icon: Sparkles, name: "More" },
 ];
@@ -173,7 +174,13 @@ export function Landing() {
       </section>
 
       <footer className="mx-auto max-w-[1080px] px-8 py-10 text-center text-xs text-muted-foreground">
-        Powered by Auth314
+        <p>Powered by Auth314</p>
+        <p className="mt-1">
+          &copy; 2026 Auth314 &middot; a Yerette Group project &middot;{" "}
+          <a href="/privacy.html" className="underline hover:text-foreground">
+            Privacy
+          </a>
+        </p>
       </footer>
     </div>
   );

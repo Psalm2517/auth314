@@ -1,6 +1,7 @@
 import type { Env, Platform } from "../types";
 import { error, json } from "../lib/http";
-import { createSession } from "../lib/session";
+import { createSession, isSessionExpired } from "../lib/session";
+import { getSession } from "../lib/kv";
 
 const VALID_PLATFORMS: Platform[] = ["discord", "telegram"];
 
@@ -60,4 +61,27 @@ export async function handleVerifyInit(
     session: token,
     expires_at: record.expires_at,
   });
+}
+
+/**
+ * GET /verify/status?session=<token>
+ * Read-only check the portal calls before starting the Pi sign-in flow, so
+ * an invalid/expired/used session is rejected up front instead of only
+ * after the user completes the entire OAuth round-trip. Does not consume
+ * the session -- only /auth/callback marks it used.
+ */
+export async function handleVerifyStatus(
+  req: Request,
+  env: Env,
+): Promise<Response> {
+  const url = new URL(req.url);
+  const session = url.searchParams.get("session");
+  if (!session) return error("session is required", 400);
+
+  const record = await getSession(env, session);
+  if (!record) return error("Session not found or expired", 404);
+  if (record.used) return error("Session already used", 409);
+  if (isSessionExpired(record)) return error("Session expired", 410);
+
+  return json({ valid: true });
 }
