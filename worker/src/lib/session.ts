@@ -9,7 +9,7 @@ export interface CreateSessionInput {
   guild_id: string;
   callback_url: string;
   key_id: string;
-  owner_discord_user_id: string;
+  owner_id: string;
 }
 
 export interface CreatedSession {

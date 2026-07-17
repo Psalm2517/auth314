@@ -62,7 +62,7 @@ export async function handleVerifyInit(
     guild_id: guild_id ?? "",
     callback_url,
     key_id: apiKey.id,
-    owner_discord_user_id: apiKey.discord_user_id,
+    owner_id: apiKey.owner_id,
   });
 
   const verifyUrl = `${env.PORTAL_BASE_URL}/?session=${encodeURIComponent(token)}`;

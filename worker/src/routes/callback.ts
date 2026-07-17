@@ -124,7 +124,7 @@ export async function handleAuthCallback(
 
   // 7. Log the verification (skip for dashboard logins -- no operator to log to).
   if (!isDashboard) {
-    logVerification(env, record.owner_discord_user_id, {
+    logVerification(env, record.owner_id, {
       timestamp: new Date().toISOString(),
       platform: record.platform,
       guild_id: record.guild_id,

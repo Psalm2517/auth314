@@ -11,8 +11,8 @@ export interface VerificationEntry {
 
 const MAX_ENTRIES = 200;
 
-export async function logVerification(env: Env, owner_discord_user_id: string, entry: VerificationEntry): Promise<void> {
-  const kvKey = `verlog:user:${owner_discord_user_id}`;
+export async function logVerification(env: Env, owner_id: string, entry: VerificationEntry): Promise<void> {
+  const kvKey = `verlog:user:${owner_id}`;
   const raw = await env.AUTH314_KV.get(kvKey);
   const entries: VerificationEntry[] = raw ? JSON.parse(raw) : [];
   entries.unshift(entry);

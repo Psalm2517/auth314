@@ -3,7 +3,7 @@ import type { Env } from "../types";
 export interface ApiKeyRecord {
   id: string;
   name: string;
-  discord_user_id: string;
+  owner_id: string;
   created_at: string;
   last_used_at: string | null;
   verification_count: number;
@@ -16,7 +16,7 @@ async function sha256(input: string): Promise<string> {
 }
 
 export const FREE_TIER_RATE_LIMIT_PER_MIN = 20;
-export const FREE_TIER_MONTHLY_QUOTA = 1000;
+export const FREE_TIER_MONTHLY_QUOTA = 500;
 
 export type ApiKeyValidationResult =
   | { ok: true; record: ApiKeyRecord }
@@ -39,7 +39,7 @@ export async function validateApiKey(env: Env, req: Request): Promise<ApiKeyVali
   const record = JSON.parse(raw) as ApiKeyRecord;
 
   // Check if this owner has unlimited access (bypasses all rate/quota checks).
-  const unlimited = await env.AUTH314_KV.get(`owner_unlimited:${record.discord_user_id}`);
+  const unlimited = await env.AUTH314_KV.get(`owner_unlimited:${record.owner_id}`);
   if (!unlimited) {
     // Rate limit: N requests per minute per key
     const minute = Math.floor(Date.now() / 60_000);

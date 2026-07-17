@@ -35,11 +35,11 @@ export function PrivacyPolicy() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">1. What Auth314 is</h2>
             <p>
-              Auth314 is a developer tool that makes it straightforward to add "Sign in with Pi" support
-              to bots, apps, and websites. It handles the Pi Sign-in OAuth flow on behalf of the
-              developer and delivers a simple signal -- confirming that a user successfully signed in
-              with their Pi account -- to the developer's webhook or callback. Auth314 does not operate
-              the Pi Network and is not affiliated with Pi Network or the Pi Core Team.
+              Auth314 is verification infrastructure that makes it straightforward to add "Sign in with Pi"
+              support to bots, apps, and websites. It handles the Pi Sign-in OAuth flow on behalf of the
+              operator and delivers a simple signal -- confirming that a user successfully signed in with
+              their Pi account -- to the operator's webhook or callback. Auth314 does not operate the Pi
+              Network and is not affiliated with Pi Network or the Pi Core Team.
             </p>
           </section>
 
@@ -50,13 +50,15 @@ export function PrivacyPolicy() {
             <p className="mb-3">
               When you complete a Pi Sign-in through Auth314, the Pi Sign-in flow provides Auth314 with
               your Pi Network user ID and username. This is stored internally and is never shared with
-              the operator, community, or any third party. Only a success signal (plus the platform user
-              ID and guild ID you were signing in with) is delivered to the developer's webhook.
+              any party -- the operator, community, or any third party. Only a success signal (plus the
+              platform user ID and guild ID you were signing in with) is delivered to the operator's
+              webhook.
             </p>
             <p>
               Sign-in sessions expire 10 minutes after they are created and can only be used once.
               A log of the last 200 completions per API key is kept to support the operator's dashboard
-              and for audit purposes.
+              and for audit purposes. When a Pi account re-verifies with a new platform identity, the
+              previous association is automatically revoked.
             </p>
 
             <h3 className="mt-4 mb-1 font-semibold text-foreground">Dashboard users (developers and operators)</h3>
@@ -111,10 +113,11 @@ export function PrivacyPolicy() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">5. Data sharing</h2>
             <p className="mb-3">
-              Auth314 does not sell, rent, or share personal data with third parties for commercial
-              purposes. Per Pi Network's Developer Terms of Use, Pi user IDs and usernames are never
-              forwarded to third-party integrations (Discord bots, webhooks, etc.) -- only a verified
-              success signal is delivered. The only external services contacted are:
+              Auth314 does not sell, rent, or share personal data with any third parties. All information
+              collected is stored on Auth314's own infrastructure (Cloudflare). Per Pi Network's Developer
+              Terms of Use, Pi user IDs and usernames are never forwarded to operators or any external
+              integration -- only a verified success signal is delivered to the operator's webhook. The
+              only external services Auth314 communicates with are:
             </p>
             <ul className="list-disc pl-5 space-y-1.5">
               <li>

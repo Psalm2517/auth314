@@ -26,9 +26,9 @@ export function TermsOfService() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">1. Service description</h2>
             <p>
-              Auth314 is a developer tool that makes it straightforward to add "Sign in with Pi" support
-              to bots, apps, and websites. It handles the Pi Sign-in OAuth flow and delivers a simple
-              success signal to the developer's webhook or callback URL. Auth314 is operated by
+              Auth314 is verification infrastructure that makes it straightforward to add "Sign in with Pi"
+              support to bots, apps, and websites. It handles the Pi Sign-in OAuth flow and delivers a
+              simple success signal to the operator's webhook or callback URL. Auth314 is operated by
               Yerette Group and is not affiliated with Pi Network or the Pi Core Team.
             </p>
           </section>
@@ -75,7 +75,7 @@ export function TermsOfService() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">5. Free tier and limits</h2>
             <p>
-              Auth314 currently offers a free tier with 1,000 verifications per month, 20 requests per
+              Auth314 currently offers a free tier with 500 verifications per month, 20 requests per
               minute, and 1 API key. The free tier is permanent and will remain available after paid
               plans are introduced. All tier limits and features are subject to change; Auth314 will
               provide reasonable notice of material changes. Exceeding limits returns an error rather
@@ -119,7 +119,9 @@ export function TermsOfService() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">9. Intellectual property</h2>
             <p>
-              The Auth314 core service is open-source. See the{" "}
+              The Auth314 core service is open-source and licensed under the GNU Affero General Public
+              License v3.0 (AGPL-3.0). Commercial use outside the terms of the AGPL requires a separate
+              commercial license from Yerette Group. See the{" "}
               <a
                 href="https://github.com/Psalm2517/auth314"
                 target="_blank"
@@ -128,8 +130,8 @@ export function TermsOfService() {
               >
                 GitHub repository
               </a>{" "}
-              for the applicable license. The Auth314 name, branding, and hosted infrastructure are
-              owned by Yerette Group. The open-source license does not grant rights to operate a
+              for license details. The Auth314 name, branding, and hosted infrastructure are owned by
+              Yerette Group. Neither the AGPL nor a commercial license grants rights to operate a
               competing hosted service under the Auth314 name.
             </p>
           </section>
