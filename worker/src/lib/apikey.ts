@@ -38,22 +38,26 @@ export async function validateApiKey(env: Env, req: Request): Promise<ApiKeyVali
 
   const record = JSON.parse(raw) as ApiKeyRecord;
 
-  // Rate limit: N requests per minute per key
-  const minute = Math.floor(Date.now() / 60_000);
-  const rlKey = `ratelimit:${record.id}:${minute}`;
-  const countRaw = await env.AUTH314_KV.get(rlKey);
-  const count = countRaw ? parseInt(countRaw, 10) : 0;
-  if (count >= FREE_TIER_RATE_LIMIT_PER_MIN) return { ok: false, reason: "rate_limited" };
+  // Check if this owner has unlimited access (bypasses all rate/quota checks).
+  const unlimited = await env.AUTH314_KV.get(`owner_unlimited:${record.discord_user_id}`);
+  if (!unlimited) {
+    // Rate limit: N requests per minute per key
+    const minute = Math.floor(Date.now() / 60_000);
+    const rlKey = `ratelimit:${record.id}:${minute}`;
+    const countRaw = await env.AUTH314_KV.get(rlKey);
+    const count = countRaw ? parseInt(countRaw, 10) : 0;
+    if (count >= FREE_TIER_RATE_LIMIT_PER_MIN) return { ok: false, reason: "rate_limited" };
 
-  // Monthly quota
-  const monthKey = `usage:month:${record.id}:${currentMonthKey()}`;
-  const usageRaw = await env.AUTH314_KV.get(monthKey);
-  const usage = usageRaw ? parseInt(usageRaw, 10) : 0;
-  if (usage >= FREE_TIER_MONTHLY_QUOTA) return { ok: false, reason: "quota_exceeded" };
+    // Monthly quota
+    const monthKey = `usage:month:${record.id}:${currentMonthKey()}`;
+    const usageRaw = await env.AUTH314_KV.get(monthKey);
+    const usage = usageRaw ? parseInt(usageRaw, 10) : 0;
+    if (usage >= FREE_TIER_MONTHLY_QUOTA) return { ok: false, reason: "quota_exceeded" };
 
-  // Increment counters (fire and forget)
-  env.AUTH314_KV.put(rlKey, String(count + 1), { expirationTtl: 120 }).catch(() => {});
-  env.AUTH314_KV.put(monthKey, String(usage + 1), { expirationTtl: 60 * 60 * 24 * 40 }).catch(() => {});
+    // Increment counters (fire and forget)
+    env.AUTH314_KV.put(rlKey, String(count + 1), { expirationTtl: 120 }).catch(() => {});
+    env.AUTH314_KV.put(monthKey, String(usage + 1), { expirationTtl: 60 * 60 * 24 * 40 }).catch(() => {});
+  }
 
   // Update last_used_at (fire and forget)
   const updated: ApiKeyRecord = {
