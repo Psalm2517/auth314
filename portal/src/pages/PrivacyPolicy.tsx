@@ -75,6 +75,23 @@ export function PrivacyPolicy() {
 
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">
+              Why your Pi user ID is stored at all
+            </h2>
+            <p>
+              Auth314 keeps a record of your Pi user ID and username on its
+              server so it has an internal audit trail of who verified and
+              when, so support questions about a specific verification can
+              be answered without asking you to sign in again, and so future
+              features (like recognizing you've already verified elsewhere
+              on the same platform, to skip asking you to sign in twice)
+              have something to check against. It is never sent to the
+              community or app that requested your verification -- see
+              "What happens when you sign in" above.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="mb-2 text-base font-semibold text-foreground">
               Analytics and tracking
             </h2>
             <p>
