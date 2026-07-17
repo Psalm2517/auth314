@@ -6,3 +6,4 @@ dist/
 *.log
 *.tsbuildinfo
 .DS_Store
+portal/public/validation-key.txt
