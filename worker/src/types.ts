@@ -18,6 +18,8 @@ export interface SessionRecord {
   callback_url: string;
   expires_at: string; // ISO 8601
   used: boolean;
+  key_id: string;
+  owner_discord_user_id: string;
 }
 
 export interface IdentityRecord {

@@ -19,7 +19,8 @@ export async function handleVerifyInit(
   req: Request,
   env: Env,
 ): Promise<Response> {
-  if (!(await validateApiKey(env, req))) {
+  const apiKey = await validateApiKey(env, req);
+  if (!apiKey) {
     return error("Invalid or missing API key", 401);
   }
 
@@ -55,6 +56,8 @@ export async function handleVerifyInit(
     platform_user_id,
     guild_id: guild_id ?? "",
     callback_url,
+    key_id: apiKey.id,
+    owner_discord_user_id: apiKey.discord_user_id,
   });
 
   const verifyUrl = `${env.PORTAL_BASE_URL}/?session=${encodeURIComponent(token)}`;

@@ -3,6 +3,7 @@ import { error, json } from "../lib/http";
 import { getSession, markSessionUsed, putIdentity } from "../lib/kv";
 import { isSessionExpired } from "../lib/session";
 import { fetchPiMe, PiApiError } from "../lib/pi";
+import { logVerification } from "../lib/verlog";
 
 interface AuthCallbackBody {
   access_token?: string;
@@ -89,7 +90,17 @@ export async function handleAuthCallback(
     );
   }
 
-  // 6. Return success to the portal.
+  // 6. Log the verification (fire and forget).
+  logVerification(env, record.owner_discord_user_id, {
+    timestamp: new Date().toISOString(),
+    platform: record.platform,
+    guild_id: record.guild_id,
+    platform_user_id: record.platform_user_id,
+    key_id: record.key_id,
+    key_name: "",
+  }).catch(() => {});
+
+  // 7. Return success to the portal.
   return json({
     status: "verified",
     pi_username: me.username,
