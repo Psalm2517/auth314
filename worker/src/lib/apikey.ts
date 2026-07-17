@@ -59,13 +59,29 @@ export async function validateApiKey(env: Env, req: Request): Promise<ApiKeyVali
     env.AUTH314_KV.put(monthKey, String(usage + 1), { expirationTtl: 60 * 60 * 24 * 40 }).catch(() => {});
   }
 
-  // Update last_used_at (fire and forget)
+  // Update last_used_at (fire and forget). verification_count is incremented
+  // separately in incrementVerificationCount, once the sign-in actually
+  // completes -- not here, where we've only validated the key for a request.
   const updated: ApiKeyRecord = {
     ...record,
     last_used_at: new Date().toISOString(),
-    verification_count: (record.verification_count ?? 0) + 1,
   };
   env.AUTH314_KV.put(`apikey:hash:${hash}`, JSON.stringify(updated)).catch(() => {});
 
   return { ok: true, record };
+}
+
+/**
+ * Increment a key's completed-verification counter. Called once a Pi
+ * sign-in actually completes (POST /auth/callback), not on every
+ * /verify/init request.
+ */
+export async function incrementVerificationCount(env: Env, key_id: string): Promise<void> {
+  const hash = await env.AUTH314_KV.get(`apikey:id:${key_id}`);
+  if (!hash) return;
+  const raw = await env.AUTH314_KV.get(`apikey:hash:${hash}`);
+  if (!raw) return;
+  const record = JSON.parse(raw) as ApiKeyRecord;
+  const updated: ApiKeyRecord = { ...record, verification_count: (record.verification_count ?? 0) + 1 };
+  await env.AUTH314_KV.put(`apikey:hash:${hash}`, JSON.stringify(updated));
 }

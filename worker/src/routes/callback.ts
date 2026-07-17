@@ -4,6 +4,7 @@ import { getSession, markSessionUsed, putIdentity, getIdentity } from "../lib/kv
 import { isSessionExpired } from "../lib/session";
 import { fetchPiMe, PiApiError } from "../lib/pi";
 import { logVerification } from "../lib/verlog";
+import { incrementVerificationCount } from "../lib/apikey";
 
 interface AuthCallbackBody {
   access_token?: string;
@@ -122,7 +123,9 @@ export async function handleAuthCallback(
     );
   }
 
-  // 7. Log the verification (skip for dashboard logins -- no operator to log to).
+  // 7. Log the verification and bump the key's completed-verification count
+  // (skip for dashboard logins -- these are Auth314's own internal login,
+  // not an operator-facing verification, so they shouldn't appear in either).
   if (!isDashboard) {
     logVerification(env, record.owner_id, {
       timestamp: new Date().toISOString(),
@@ -132,6 +135,7 @@ export async function handleAuthCallback(
       key_id: record.key_id,
       key_name: "",
     }).catch(() => {});
+    incrementVerificationCount(env, record.key_id).catch(() => {});
   }
 
   // 8. For dashboard logins, tell the portal where to send the user so they
