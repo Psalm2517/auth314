@@ -9,7 +9,7 @@ export interface Env {
   PORTAL_BASE_URL: string;
 }
 
-export type Platform = "discord" | "telegram";
+export type Platform = string;
 
 export interface SessionRecord {
   platform: Platform;

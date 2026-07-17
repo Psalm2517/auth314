@@ -1,9 +1,7 @@
-import type { Env, Platform } from "../types";
+import type { Env } from "../types";
 import { error, json } from "../lib/http";
 import { createSession, isSessionExpired } from "../lib/session";
 import { getSession } from "../lib/kv";
-
-const VALID_PLATFORMS: Platform[] = ["discord", "telegram"];
 
 interface VerifyInitBody {
   platform?: string;
@@ -29,8 +27,8 @@ export async function handleVerifyInit(
 
   const { platform, platform_user_id, guild_id, callback_url } = body;
 
-  if (!platform || !VALID_PLATFORMS.includes(platform as Platform)) {
-    return error("platform must be one of: discord, telegram", 400);
+  if (!platform) {
+    return error("platform is required", 400);
   }
   if (!platform_user_id) {
     return error("platform_user_id is required", 400);
@@ -48,7 +46,7 @@ export async function handleVerifyInit(
   }
 
   const { token, record } = await createSession(env, {
-    platform: platform as Platform,
+    platform,
     platform_user_id,
     guild_id: guild_id ?? "",
     callback_url,
