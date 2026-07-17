@@ -14,7 +14,10 @@ id = "883b391ac30c4c618e99c5e725941f83"
 # --- Non-secret config variables ---
 [vars]
 PI_AUTHORIZE_BASE_URL = "https://accounts.pinet.com/oauth/authorize"
-PORTAL_BASE_URL = "https://auth314.com"
+# The verify/callback UI's own domain (not the auth314.com marketing site,
+# which lives in the separate auth314-web repo). /verify/init builds
+# verify_url from this.
+PORTAL_BASE_URL = "https://app.auth314.com"
 
 # --- Secrets (do NOT put these here) ---
 # Set with:

@@ -17,7 +17,6 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, "index.html"),
         callback: path.resolve(__dirname, "callback.html"),
-        privacy: path.resolve(__dirname, "privacy.html"),
       },
     },
   },
