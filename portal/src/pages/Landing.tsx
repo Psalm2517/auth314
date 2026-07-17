@@ -1,7 +1,14 @@
-import { Github } from "lucide-react";
+import { Github, MessageCircle, Send, Globe, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Brand } from "@/components/Brand";
+
+const PLATFORMS = [
+  { icon: MessageCircle, name: "Discord" },
+  { icon: Send, name: "Telegram" },
+  { icon: Globe, name: "Websites" },
+  { icon: Sparkles, name: "More" },
+];
 
 const STEPS = [
   {
@@ -138,6 +145,29 @@ export function Landing() {
                 never included in the webhook payload.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-[1080px] px-8 py-16 text-center">
+          <h2 className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            Platforms
+          </h2>
+          <p className="mx-auto mb-10 max-w-[440px] text-sm text-muted-foreground">
+            Starting with Discord, expanding from there.
+          </p>
+          <div className="mx-auto grid max-w-[640px] grid-cols-2 gap-4 sm:grid-cols-4">
+            {PLATFORMS.map(({ icon: Icon, name }) => (
+              <div
+                key={name}
+                className="flex flex-col items-center gap-3 rounded-lg border border-border bg-card px-4 py-6"
+              >
+                <Icon className="h-6 w-6 text-muted-foreground" />
+                <span className="text-sm font-semibold">{name}</span>
+                <Badge className="px-2.5 py-0.5 text-[10px]">Coming soon</Badge>
+              </div>
+            ))}
           </div>
         </div>
       </section>
