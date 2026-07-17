@@ -2,6 +2,7 @@ import type { Env } from "../types";
 import { error, json } from "../lib/http";
 import { createSession, isSessionExpired } from "../lib/session";
 import { getSession } from "../lib/kv";
+import { validateApiKey } from "../lib/apikey";
 
 interface VerifyInitBody {
   platform?: string;
@@ -18,6 +19,10 @@ export async function handleVerifyInit(
   req: Request,
   env: Env,
 ): Promise<Response> {
+  if (!(await validateApiKey(env, req))) {
+    return error("Invalid or missing API key", 401);
+  }
+
   let body: VerifyInitBody;
   try {
     body = (await req.json()) as VerifyInitBody;
