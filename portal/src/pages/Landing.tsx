@@ -26,21 +26,20 @@ const STEPS = [
   { n: 2, text: "User clicks the link and signs in with Pi" },
   {
     n: 3,
-    text: "Auth314 delivers the verified identity to your callback URL",
+    text: "Auth314 delivers the verified signal to your callback URL",
   },
 ];
 
 const ROADMAP = [
   "Paid tiers with higher rate limits and quotas",
   "Telegram integration",
-  "\"Sign in with Pi\" for websites — Auth314 handles the OAuth, you get a verified user",
-  "Hosted Discord bot (no self-hosting required)",
+  "\"Sign in with Pi\" for websites -- Auth314 handles the OAuth, you get a verified user",
   "Multiple API keys and per-key analytics",
 ];
 
 const GITHUB_URL = "https://github.com/Psalm2517/auth314";
 
-function useFadeIn(threshold = 0.15) {
+function useFadeIn(threshold = 0.12) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
 
@@ -48,7 +47,9 @@ function useFadeIn(threshold = 0.15) {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      ([entry]) => {
+        if (entry.isIntersecting) { setVisible(true); obs.disconnect(); }
+      },
       { threshold },
     );
     obs.observe(el);
@@ -58,12 +59,21 @@ function useFadeIn(threshold = 0.15) {
   return { ref, visible };
 }
 
-function FadeSection({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function FadeSection({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
   const { ref, visible } = useFadeIn();
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      className={`transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"} ${className}`}
+      className={`transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
+      style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
     >
       {children}
     </section>
@@ -101,7 +111,6 @@ export function Landing() {
 
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border">
-        {/* Glow blobs */}
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-[-320px] h-[620px] w-[1100px] -translate-x-1/2 rounded-full"
@@ -113,32 +122,29 @@ export function Landing() {
           style={{ background: "radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%)" }}
         />
         <div className="relative mx-auto max-w-[680px] px-8 py-24 text-center">
-          <div
-            className="inline-flex mb-5 animate-fade-in"
-            style={{ animationDelay: "0ms" }}
-          >
+          <div className="inline-flex mb-5" style={{ animation: "fade-up 0.5s ease-out 0ms both" }}>
             <Badge>In development · Free to use</Badge>
           </div>
           <h1
-            className="mb-4 bg-clip-text text-[42px] font-bold leading-[1.2] tracking-tight text-transparent animate-fade-in"
+            className="mb-4 bg-clip-text text-[42px] font-bold leading-[1.2] tracking-tight text-transparent"
             style={{
               backgroundImage: "linear-gradient(180deg, #ffffff 0%, #c7c7c9 100%)",
-              animationDelay: "80ms",
+              animation: "fade-up 0.55s ease-out 80ms both",
             }}
           >
             Pi Sign-in, made simple.
           </h1>
           <p
-            className="mx-auto mb-8 max-w-[500px] text-[17px] text-muted-foreground animate-fade-in"
-            style={{ animationDelay: "160ms" }}
+            className="mx-auto mb-8 max-w-[500px] text-[17px] text-muted-foreground"
+            style={{ animation: "fade-up 0.55s ease-out 160ms both" }}
           >
             Auth314 handles the Pi Sign-in OAuth flow so you don't have to.
-            Get a verified signal delivered to your webhook — no Pi Developer
+            Get a verified signal delivered to your webhook -- no Pi Developer
             Portal app, no OAuth to build.
           </p>
           <div
-            className="flex items-center justify-center gap-3 animate-fade-in"
-            style={{ animationDelay: "240ms" }}
+            className="flex items-center justify-center gap-3"
+            style={{ animation: "fade-up 0.55s ease-out 240ms both" }}
           >
             <Button size="pill" asChild>
               <a href="https://dashboard.auth314.com">Get started free</a>
@@ -165,8 +171,12 @@ export function Landing() {
                 How it works
               </h2>
               <ol className="space-y-3.5">
-                {STEPS.map((step) => (
-                  <li key={step.n} className="flex items-baseline gap-3 text-sm">
+                {STEPS.map((step, i) => (
+                  <li
+                    key={step.n}
+                    className="flex items-baseline gap-3 text-sm"
+                    style={{ transitionDelay: `${i * 60}ms` }}
+                  >
                     <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full border border-border bg-background text-[11px] font-bold text-muted-foreground">
                       {step.n}
                     </span>
@@ -220,19 +230,23 @@ export function Landing() {
             Starting with Discord, expanding from there.
           </p>
           <div className="mx-auto grid max-w-[480px] grid-cols-3 gap-4">
-            {PLATFORMS.map(({ icon: Icon, name, live }) => (
+            {PLATFORMS.map(({ icon: Icon, name, live }, i) => (
               <div
                 key={name}
-                className="flex flex-col items-center gap-3 rounded-lg border border-border bg-card px-4 py-6 transition-colors hover:border-muted-foreground/40"
+                className="flex flex-col items-center gap-3 rounded-lg border border-border bg-card px-4 py-6 transition-all duration-300 hover:border-muted-foreground/40 hover:-translate-y-0.5"
+                style={{ transitionDelay: `${i * 60}ms` }}
               >
                 <Icon className="h-6 w-6 text-muted-foreground" />
                 <span className="text-sm font-semibold">{name}</span>
                 {live ? (
                   <span
                     className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-semibold"
-                    style={{ background: "rgba(110,86,207,0.15)", color: "var(--accent)" }}
+                    style={{ background: "rgba(34,197,94,0.12)", color: "#4ade80" }}
                   >
-                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--accent)" }} />
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{ background: "#4ade80", boxShadow: "0 0 4px #4ade80" }}
+                    />
                     Live
                   </span>
                 ) : (
@@ -250,9 +264,9 @@ export function Landing() {
           <h2 className="mb-2 text-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
             Pricing
           </h2>
-          <p className="mx-auto mb-10 max-w-[500px] text-center text-sm text-muted-foreground">
-            The free tier is permanent — it stays after launch. Paid plans will be introduced later
-            with higher limits, but there will always be a free tier.
+          <p className="mx-auto mb-10 max-w-[520px] text-center text-sm text-muted-foreground">
+            The free tier is permanent and will stay after launch. Paid plans will be introduced
+            later with higher limits -- there will always be a free tier.
           </p>
           <div className="rounded-lg border border-border bg-card p-6">
             <div className="mb-5 flex items-center justify-between">
@@ -275,11 +289,9 @@ export function Landing() {
               ))}
             </ul>
           </div>
-          <div className="mt-4 rounded-lg border border-border border-dashed bg-card/50 p-6 opacity-60">
+          <div className="mt-4 rounded-lg border border-dashed border-border bg-card/50 p-6 opacity-60">
             <div className="mb-5 flex items-center justify-between">
-              <div>
-                <span className="text-sm font-bold">Pro</span>
-              </div>
+              <span className="text-sm font-bold">Pro</span>
               <Badge className="px-2.5 py-0.5 text-[10px]">Coming soon</Badge>
             </div>
             <ul className="space-y-2.5">
@@ -311,8 +323,12 @@ export function Landing() {
             What's planned
           </h2>
           <ul className="space-y-4">
-            {ROADMAP.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-sm">
+            {ROADMAP.map((item, i) => (
+              <li
+                key={item}
+                className="flex items-start gap-3 text-sm"
+                style={{ transitionDelay: `${i * 50}ms` }}
+              >
                 <Badge className="mt-0.5 flex-none px-2.5 py-0.5 text-[10px]">Planned</Badge>
                 <span className="text-muted-foreground">{item}</span>
               </li>
@@ -321,24 +337,30 @@ export function Landing() {
         </div>
       </FadeSection>
 
-      <footer className="border-t border-border mx-auto max-w-[1080px] px-8 py-10 text-center text-xs text-muted-foreground">
-        <p>Powered by Auth314</p>
-        <p className="mt-1">
-          &copy; 2026 Auth314 &middot; Yerette Group &middot;{" "}
-          <a href="/privacy.html" className="underline hover:text-foreground">Privacy</a>
-          {" · "}
-          <a href="/tos.html" className="underline hover:text-foreground">Terms</a>
-        </p>
+      <footer className="border-t border-border">
+        <div className="mx-auto max-w-[1080px] px-8 py-10 text-center text-xs text-muted-foreground">
+          <p>Powered by Auth314</p>
+          <p className="mt-1">
+            &copy; 2026{" "}
+            <a href="https://auth314.com" className="hover:text-foreground transition-colors">
+              Auth314
+            </a>
+            {" "}&middot;{" "}
+            <a href="mailto:hello@auth314.com" className="hover:text-foreground transition-colors">
+              Yerette Group
+            </a>
+            {" "}&middot;{" "}
+            <a href="/privacy.html" className="underline hover:text-foreground">Privacy</a>
+            {" "}&middot;{" "}
+            <a href="/tos.html" className="underline hover:text-foreground">Terms</a>
+          </p>
+        </div>
       </footer>
 
       <style>{`
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(16px); }
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(20px); }
           to   { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-          opacity: 0;
-          animation: fade-in 0.6s ease-out forwards;
         }
       `}</style>
     </div>
