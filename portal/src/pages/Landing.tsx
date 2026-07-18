@@ -278,7 +278,7 @@ export function Landing() {
             </div>
             <ul className="space-y-2.5">
               {[
-                "1,000 verifications / month",
+                "500 verifications / month",
                 "20 requests / minute",
                 "1 API key",
               ].map((item) => (
