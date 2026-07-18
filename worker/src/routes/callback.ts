@@ -125,7 +125,13 @@ export async function handleAuthCallback(
   try {
     const cbRes = await fetch(record.callback_url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // Lets first-party integrations (e.g. auth314-bot) confirm this
+        // callback genuinely came from Auth314 core. Third-party operators
+        // don't have AUTH314_API_SECRET and simply ignore this header.
+        Authorization: `Bearer ${env.AUTH314_API_SECRET}`,
+      },
       body: JSON.stringify(callbackPayload),
     });
     if (!cbRes.ok) {

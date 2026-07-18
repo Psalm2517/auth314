@@ -27,3 +27,8 @@ directory = "./portal/dist"
 # Set with:
 #   wrangler secret put PI_OAUTH_CLIENT_ID
 #   wrangler secret put PI_API_KEY
+#   wrangler secret put AUTH314_API_SECRET
+# AUTH314_API_SECRET is shared with first-party Auth314 integrations
+# (e.g. auth314-bot) -- same value must be set as a secret in that repo too.
+# Authenticates trusted callers of /api/verify/init and is sent as the
+# Authorization header on outgoing /auth/callback webhook deliveries.
