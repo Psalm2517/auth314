@@ -1,6 +1,6 @@
 # Auth314
 
-Auth314 is verification infrastructure for "Sign in with Pi." It handles the
+Auth314 is verification infrastructure for "Pi Sign-in." It handles the
 Pi Network OAuth flow on an operator's behalf and delivers a single signal —
 whether a user successfully verified their Pi account — to that operator's
 webhook. Auth314 is not affiliated with Pi Network or the Pi Core Team.
@@ -9,8 +9,7 @@ Live service: [auth314.com](https://auth314.com) · Dashboard: [dashboard.auth31
 
 ## What's in this repo
 
-This is the core service: a Cloudflare Worker (API) and a static portal
-(the page end users complete Pi sign-in on).
+This is the core service: a Cloudflare Worker (API) and a static webpage.
 
 ```
 worker/   Cloudflare Worker — session/verification API, API key auth, KV storage
@@ -32,16 +31,11 @@ portal/   Static UI served at app.auth314.com — Pi OAuth callback handling,
 Pi identity (the user's Pi UID and username) is never included in that
 callback. Per Pi's Developer Terms of Use, it stays internal to Auth314 and
 is not shared with operators or any third party — operators only learn
-*that* a user verified, not *who* they are on Pi Network.
+that a user verified, not who they are on Pi Network.
 
 Each Pi account maps to exactly one verified platform identity at a time;
 re-verifying with a different platform account automatically revokes the
 previous one.
-
-## Related repos
-
-- [`auth314-dashboard`](https://github.com/Psalm2517/auth314-dashboard) — operator dashboard (API keys, usage, verification log)
-- [`auth314-discord-bot`](https://github.com/Psalm2517/auth314-discord-bot) — reference Discord integration built on this API
 
 ## License
 
