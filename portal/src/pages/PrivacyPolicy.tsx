@@ -35,11 +35,12 @@ export function PrivacyPolicy() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">1. What Auth314 is</h2>
             <p>
-              Auth314 is verification infrastructure that makes it straightforward to add "Sign in with Pi"
-              support to bots, apps, and websites. It handles the Pi Sign-in OAuth flow on behalf of the
-              operator and delivers a simple signal -- confirming that a user successfully signed in with
-              their Pi account -- to the operator's webhook or callback. Auth314 does not operate the Pi
-              Network and is not affiliated with Pi Network or the Pi Core Team.
+              Auth314 is verification infrastructure that makes it straightforward to confirm a user is a
+              real Pi Network Pioneer. It runs the Pi Sign-in OAuth flow on behalf of the operator, but
+              does not authenticate the user into the operator's app or account -- it delivers a simple
+              signal confirming that the user successfully verified their Pi account, to the operator's
+              webhook or callback. Auth314 does not operate the Pi Network and is not affiliated with Pi
+              Network or the Pi Core Team.
             </p>
           </section>
 
@@ -200,7 +201,7 @@ export function PrivacyPolicy() {
           &copy; 2026{" "}
           <a href="https://auth314.com" className="hover:text-foreground transition-colors">Auth314</a>
           {" "}&middot;{" "}
-          <a href="mailto:hello@auth314.com" className="hover:text-foreground transition-colors">Yerette Group</a>
+          <a href="https://yerettegroup.com" target="_blank" rel="noopener" className="hover:text-foreground transition-colors">Yerette Group</a>
           {" "}&middot;{" "}
           <a href="/tos.html" className="underline hover:text-foreground">Terms of Service</a>
         </div>

@@ -44,15 +44,25 @@ export function Landing() {
       <header className="border-b border-border">
         <div className="mx-auto flex max-w-[1080px] items-center justify-between px-8 py-5">
           <Brand className="text-lg font-bold tracking-tight" />
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
-          >
-            <Github className="h-4 w-4" />
-            GitHub
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://docs.auth314.com"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
+            >
+              Docs
+            </a>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </a>
+          </div>
         </div>
       </header>
 

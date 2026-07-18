@@ -26,10 +26,11 @@ export function TermsOfService() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">1. Service description</h2>
             <p>
-              Auth314 is verification infrastructure that makes it straightforward to add "Sign in with Pi"
-              support to bots, apps, and websites. It handles the Pi Sign-in OAuth flow and delivers a
-              simple success signal to the operator's webhook or callback URL. Auth314 is operated by
-              Yerette Group and is not affiliated with Pi Network or the Pi Core Team.
+              Auth314 is verification infrastructure that makes it straightforward to confirm a user is a
+              real Pi Network Pioneer. It runs the Pi Sign-in OAuth flow, but does not authenticate the
+              user into the operator's app or account -- it delivers a simple success signal to the
+              operator's webhook or callback URL. Auth314 is operated by Yerette Group and is not
+              affiliated with Pi Network or the Pi Core Team.
             </p>
           </section>
 
@@ -180,7 +181,7 @@ export function TermsOfService() {
           &copy; 2026{" "}
           <a href="https://auth314.com" className="hover:text-foreground transition-colors">Auth314</a>
           {" "}&middot;{" "}
-          <a href="mailto:hello@auth314.com" className="hover:text-foreground transition-colors">Yerette Group</a>
+          <a href="https://yerettegroup.com" target="_blank" rel="noopener" className="hover:text-foreground transition-colors">Yerette Group</a>
           {" "}&middot;{" "}
           <a href="/privacy.html" className="underline hover:text-foreground">Privacy Policy</a>
         </div>

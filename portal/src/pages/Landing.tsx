@@ -33,8 +33,7 @@ const STEPS = [
 const ROADMAP = [
   "Paid tiers with higher rate limits and quotas",
   "Telegram integration",
-  "\"Sign in with Pi\" for websites -- Auth314 handles the OAuth, you get a verified user",
-  "Multiple API keys and per-key analytics",
+  "A drop-in \"Verify with Pi\" widget for websites -- no bot required",
 ];
 
 const GITHUB_URL = "https://github.com/Psalm2517/auth314";
@@ -346,7 +345,7 @@ export function Landing() {
               Auth314
             </a>
             {" "}&middot;{" "}
-            <a href="mailto:hello@auth314.com" className="hover:text-foreground transition-colors">
+            <a href="https://yerettegroup.com" target="_blank" rel="noopener" className="hover:text-foreground transition-colors">
               Yerette Group
             </a>
             {" "}&middot;{" "}

@@ -7,6 +7,8 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](./LICENSE)
 [![CI](https://github.com/Psalm2517/auth314/actions/workflows/ci.yml/badge.svg)](https://github.com/Psalm2517/auth314/actions/workflows/ci.yml)
 [![Deploy](https://github.com/Psalm2517/auth314/actions/workflows/deploy.yml/badge.svg)](https://github.com/Psalm2517/auth314/actions/workflows/deploy.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-f38020.svg?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)
 
 [Website](https://auth314.com) · [Docs](https://docs.auth314.com) · [Terms of Service](https://auth314.com/tos) · [Privacy Policy](https://auth314.com/privacy)
 
@@ -46,6 +48,7 @@ previous association.
 ```
 worker/   Cloudflare Worker: session and verification API, API key auth, KV storage
 portal/   Static page served at app.auth314.com where end users complete Pi sign-in
+web/      Marketing site served at auth314.com
 ```
 
 ## Hosted services
