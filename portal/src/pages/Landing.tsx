@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Github, Globe } from "lucide-react";
-import { SiDiscord, SiTelegram } from "react-icons/si";
+import { Globe } from "lucide-react";
+import { SiDiscord, SiTelegram, SiGithub } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Brand } from "@/components/Brand";
@@ -109,7 +109,7 @@ export function Landing() {
               rel="noopener"
               className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
             >
-              <Github className="h-4 w-4" />
+              <SiGithub className="h-4 w-4" />
               GitHub
             </a>
           </div>
@@ -162,7 +162,7 @@ export function Landing() {
               rel="noopener"
               className="inline-flex items-center gap-1.5 rounded-full border border-border px-5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
             >
-              <Github className="h-4 w-4" />
+              <SiGithub className="h-4 w-4" />
               View on GitHub
             </a>
           </div>
