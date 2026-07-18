@@ -46,6 +46,12 @@ export function Landing() {
           <Brand className="text-lg font-bold tracking-tight" />
           <div className="flex items-center gap-3">
             <a
+              href="https://dashboard.auth314.com"
+              className="text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Dashboard
+            </a>
+            <a
               href="https://docs.auth314.com"
               target="_blank"
               rel="noopener"
@@ -184,7 +190,9 @@ export function Landing() {
       <footer className="mx-auto max-w-[1080px] px-8 py-10 text-center text-xs text-muted-foreground">
         <p>Powered by Auth314</p>
         <p className="mt-1">
-          &copy; 2026 Auth314 &middot; Yerette Group &middot;{" "}
+          &copy; 2026 Auth314 &middot;{" "}
+          <a href="https://yerettegroup.com" target="_blank" rel="noopener" className="hover:text-foreground transition-colors">Yerette Group</a>
+          {" "}&middot;{" "}
           <a href="/privacy.html" className="underline hover:text-foreground">
             Privacy
           </a>

@@ -122,7 +122,7 @@ export function Verify() {
               community.
             </p>
             <Button className="mt-4 w-full" onClick={handleSignIn}>
-              Sign in with Pi
+              Continue with Pi Sign-in
             </Button>
           </div>
         )}

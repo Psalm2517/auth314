@@ -64,7 +64,7 @@ export function PrivacyPolicy() {
               What happens when you sign in
             </h2>
             <p>
-              Clicking "Sign in with Pi" sends you to Pi Network's own
+              Clicking "Continue with Pi Sign-in" sends you to Pi Network's own
               sign-in page, which is not operated by Auth314 and has its own
               privacy practices. When you're sent back to app.auth314.com,
               your browser sends the resulting access token directly to
@@ -124,7 +124,8 @@ export function PrivacyPolicy() {
       </div>
 
       <footer className="mx-auto max-w-[1080px] px-8 py-10 text-center text-xs text-muted-foreground">
-        &copy; 2026 Auth314 &middot; Yerette Group
+        &copy; 2026 Auth314 &middot;{" "}
+        <a href="https://yerettegroup.com" target="_blank" rel="noopener" className="hover:text-foreground transition-colors">Yerette Group</a>
       </footer>
     </div>
   );
