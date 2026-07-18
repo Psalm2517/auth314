@@ -48,6 +48,7 @@ previous association.
 ```
 worker/   Cloudflare Worker: session and verification API, API key auth, KV storage
 portal/   Static page served at app.auth314.com where end users complete Pi sign-in
+web/      Marketing site served at auth314.com
 ```
 
 ## Hosted services
