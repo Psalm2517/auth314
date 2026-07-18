@@ -50,9 +50,9 @@ portal/   Static page served at app.auth314.com where end users complete Pi sign
 
 ## Where to use it
 
+- **Dashboard** — [dashboard.auth314.com](https://dashboard.auth314.com), manage API keys and view usage
 - **Discord** — [Add the Auth314 bot](https://discord.com/oauth2/authorize?client_id=1527761038999683242&permissions=268437504&integration_type=0&scope=bot+applications.commands)
-
-More platforms coming soon.
+- **Telegram** — coming soon
 
 ## License
 
