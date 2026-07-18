@@ -3,7 +3,7 @@ import { error, json } from "../lib/http";
 import { getSession, markSessionUsed, putIdentity, getIdentity } from "../lib/kv";
 import { isSessionExpired } from "../lib/session";
 import { fetchPiMe, PiApiError } from "../lib/pi";
-import { logVerification, incrementGlobalStats } from "../lib/verlog";
+import { logVerification, incrementGlobalStats, incrementGlobalFailure } from "../lib/verlog";
 import { incrementVerificationCount } from "../lib/apikey";
 
 interface AuthCallbackBody {
@@ -45,6 +45,10 @@ export async function handleAuthCallback(
   try {
     me = await fetchPiMe(env, access_token);
   } catch (err) {
+    // Skip dashboard logins -- internal, not an operator-facing verification.
+    if (record.platform !== "dashboard") {
+      incrementGlobalFailure(env).catch(() => {});
+    }
     const status = err instanceof PiApiError ? 401 : 502;
     return error(
       `Pi verification failed: ${(err as Error).message}`,

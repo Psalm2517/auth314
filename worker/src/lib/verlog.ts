@@ -20,25 +20,29 @@ export async function logVerification(env: Env, owner_id: string, entry: Verific
   await env.AUTH314_KV.put(kvKey, JSON.stringify(entries));
 }
 
+async function incrementCounter(env: Env, key: string): Promise<void> {
+  const raw = await env.AUTH314_KV.get(key);
+  const count = raw ? parseInt(raw, 10) : 0;
+  await env.AUTH314_KV.put(key, String(count + 1));
+}
+
 /**
  * Platform-wide lifetime counters, across all operators. Unlike verlog
  * (capped at 200 entries per operator, for their own dashboard log), these
  * never roll off -- read by the admin panel for total verification stats.
  */
 export async function incrementGlobalStats(env: Env, platform: string): Promise<void> {
-  const totalKey = "global:total_verifications";
-  const platformKey = `global:platform:${platform}`;
-
-  const [totalRaw, platformRaw] = await Promise.all([
-    env.AUTH314_KV.get(totalKey),
-    env.AUTH314_KV.get(platformKey),
-  ]);
-
-  const total = totalRaw ? parseInt(totalRaw, 10) : 0;
-  const platformCount = platformRaw ? parseInt(platformRaw, 10) : 0;
-
   await Promise.all([
-    env.AUTH314_KV.put(totalKey, String(total + 1)),
-    env.AUTH314_KV.put(platformKey, String(platformCount + 1)),
+    incrementCounter(env, "global:total_verifications"),
+    incrementCounter(env, `global:platform:${platform}`),
   ]);
+}
+
+/**
+ * A user reached the Pi OAuth callback but Pi verification itself failed
+ * (bad/expired token, Pi API error) -- tracked separately from successes
+ * for a success-rate metric on the admin analytics view.
+ */
+export async function incrementGlobalFailure(env: Env): Promise<void> {
+  await incrementCounter(env, "global:total_failures");
 }
