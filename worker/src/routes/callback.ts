@@ -3,7 +3,7 @@ import { error, json } from "../lib/http";
 import { getSession, markSessionUsed, putIdentity, getIdentity } from "../lib/kv";
 import { isSessionExpired } from "../lib/session";
 import { fetchPiMe, PiApiError } from "../lib/pi";
-import { logVerification } from "../lib/verlog";
+import { logVerification, incrementGlobalStats } from "../lib/verlog";
 import { incrementVerificationCount } from "../lib/apikey";
 
 interface AuthCallbackBody {
@@ -125,6 +125,7 @@ export async function handleAuthCallback(
       key_name: "",
     }).catch(() => {});
     incrementVerificationCount(env, record.key_id).catch(() => {});
+    incrementGlobalStats(env, record.platform).catch(() => {});
   }
 
   try {

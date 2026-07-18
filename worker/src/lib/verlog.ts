@@ -19,3 +19,26 @@ export async function logVerification(env: Env, owner_id: string, entry: Verific
   if (entries.length > MAX_ENTRIES) entries.length = MAX_ENTRIES;
   await env.AUTH314_KV.put(kvKey, JSON.stringify(entries));
 }
+
+/**
+ * Platform-wide lifetime counters, across all operators. Unlike verlog
+ * (capped at 200 entries per operator, for their own dashboard log), these
+ * never roll off -- read by the admin panel for total verification stats.
+ */
+export async function incrementGlobalStats(env: Env, platform: string): Promise<void> {
+  const totalKey = "global:total_verifications";
+  const platformKey = `global:platform:${platform}`;
+
+  const [totalRaw, platformRaw] = await Promise.all([
+    env.AUTH314_KV.get(totalKey),
+    env.AUTH314_KV.get(platformKey),
+  ]);
+
+  const total = totalRaw ? parseInt(totalRaw, 10) : 0;
+  const platformCount = platformRaw ? parseInt(platformRaw, 10) : 0;
+
+  await Promise.all([
+    env.AUTH314_KV.put(totalKey, String(total + 1)),
+    env.AUTH314_KV.put(platformKey, String(platformCount + 1)),
+  ]);
+}
