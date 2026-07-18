@@ -96,6 +96,14 @@ export function Landing() {
               Dashboard
             </a>
             <a
+              href="https://docs.auth314.com"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
+            >
+              Docs
+            </a>
+            <a
               href={GITHUB_URL}
               target="_blank"
               rel="noopener"
