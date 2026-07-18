@@ -8,7 +8,7 @@
 [![CI](https://github.com/Psalm2517/auth314/actions/workflows/ci.yml/badge.svg)](https://github.com/Psalm2517/auth314/actions/workflows/ci.yml)
 [![Deploy](https://github.com/Psalm2517/auth314/actions/workflows/deploy.yml/badge.svg)](https://github.com/Psalm2517/auth314/actions/workflows/deploy.yml)
 
-[Website](https://auth314.com) · [Dashboard](https://dashboard.auth314.com) · [Terms of Service](https://auth314.com/tos) · [Privacy Policy](https://auth314.com/privacy)
+[Website](https://auth314.com) · [Docs](https://docs.auth314.com) · [Terms of Service](https://auth314.com/tos) · [Privacy Policy](https://auth314.com/privacy)
 
 </div>
 
