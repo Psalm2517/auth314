@@ -91,14 +91,19 @@ export async function handleAuthCallback(
   //
   // Pi identity (pi_uid, pi_username) is never sent to third-party
   // integrations per Pi Developer ToS §4. The "dashboard" platform is
-  // Auth314's own internal infrastructure, so pi identity is included there.
+  // Auth314's own internal infrastructure, so pi identity is included there --
+  // but only when the callback actually targets the dashboard's origin.
+  // Anyone with an API key can claim platform "dashboard"; without the origin
+  // check that claim alone would leak pi identity to an arbitrary callback_url.
   const callbackPayload: Record<string, unknown> = {
     platform_user_id: record.platform_user_id,
     guild_id: record.guild_id,
     verified: true,
   };
 
-  const isDashboard = record.platform === "dashboard";
+  const isDashboard =
+    record.platform === "dashboard" &&
+    new URL(record.callback_url).origin === env.DASHBOARD_ORIGIN;
   if (isDashboard) {
     callbackPayload.pi_uid = me.uid;
     callbackPayload.pi_username = me.username;

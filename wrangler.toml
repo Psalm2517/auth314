@@ -18,6 +18,10 @@ PI_AUTHORIZE_BASE_URL = "https://accounts.pinet.com/oauth/authorize"
 # which lives in the separate auth314-web repo). /verify/init builds
 # verify_url from this.
 PORTAL_BASE_URL = "https://app.auth314.com"
+# Only callbacks to this origin may receive pi identity via the "dashboard"
+# platform flow. Prevents third-party keys from claiming platform "dashboard"
+# to exfiltrate pi_uid/pi_username to their own callback_url.
+DASHBOARD_ORIGIN = "https://dashboard.auth314.com"
 
 # --- Static assets (portal UI) ---
 [assets]

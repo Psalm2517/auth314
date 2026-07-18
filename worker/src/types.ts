@@ -7,6 +7,8 @@ export interface Env {
   PI_API_KEY: string;
   PI_AUTHORIZE_BASE_URL: string;
   PORTAL_BASE_URL: string;
+  // Origin allowed to receive pi identity in dashboard-platform callbacks.
+  DASHBOARD_ORIGIN: string;
 }
 
 export type Platform = string;

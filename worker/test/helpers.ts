@@ -32,6 +32,7 @@ export function makeEnv(overrides: Partial<Env> = {}): Env {
     PI_API_KEY: "test-api-key",
     PI_AUTHORIZE_BASE_URL: "https://auth.example/oauth/authorize",
     PORTAL_BASE_URL: "https://portal.example",
+    DASHBOARD_ORIGIN: "https://dashboard.example",
     ...overrides,
   };
 }
@@ -52,7 +53,7 @@ export async function seedApiKey(env: Env, id = "test-key-id"): Promise<string> 
     JSON.stringify({
       id,
       name: "Test Key",
-      discord_user_id: "test-owner",
+      owner_id: "test-owner",
       created_at: new Date().toISOString(),
       last_used_at: null,
       verification_count: 0,
