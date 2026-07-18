@@ -28,9 +28,7 @@ export class MemoryKV {
 export function makeEnv(overrides: Partial<Env> = {}): Env {
   return {
     AUTH314_KV: new MemoryKV() as unknown as KVNamespace,
-    PI_OAUTH_CLIENT_ID: "test-client-id",
     PI_API_KEY: "test-api-key",
-    PI_AUTHORIZE_BASE_URL: "https://auth.example/oauth/authorize",
     PORTAL_BASE_URL: "https://portal.example",
     DASHBOARD_ORIGIN: "https://dashboard.example",
     ...overrides,
