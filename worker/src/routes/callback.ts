@@ -104,6 +104,24 @@ export async function handleAuthCallback(
     callbackPayload.pi_username = me.username;
   }
 
+  // 7. Log the verification and bump the key's completed-verification count.
+  // This happens regardless of whether callback delivery below succeeds --
+  // the Pi sign-in itself is already complete at this point, so an
+  // unreachable operator webhook must not erase that fact.
+  // (Skip for dashboard logins -- these are Auth314's own internal login,
+  // not an operator-facing verification, so they shouldn't appear in either.)
+  if (!isDashboard) {
+    logVerification(env, record.owner_id, {
+      timestamp: new Date().toISOString(),
+      platform: record.platform,
+      guild_id: record.guild_id,
+      platform_user_id: record.platform_user_id,
+      key_id: record.key_id,
+      key_name: "",
+    }).catch(() => {});
+    incrementVerificationCount(env, record.key_id).catch(() => {});
+  }
+
   try {
     const cbRes = await fetch(record.callback_url, {
       method: "POST",
@@ -121,21 +139,6 @@ export async function handleAuthCallback(
       `Callback delivery failed: ${(err as Error).message}`,
       502,
     );
-  }
-
-  // 7. Log the verification and bump the key's completed-verification count
-  // (skip for dashboard logins -- these are Auth314's own internal login,
-  // not an operator-facing verification, so they shouldn't appear in either).
-  if (!isDashboard) {
-    logVerification(env, record.owner_id, {
-      timestamp: new Date().toISOString(),
-      platform: record.platform,
-      guild_id: record.guild_id,
-      platform_user_id: record.platform_user_id,
-      key_id: record.key_id,
-      key_name: "",
-    }).catch(() => {});
-    incrementVerificationCount(env, record.key_id).catch(() => {});
   }
 
   // 8. For dashboard logins, tell the portal where to send the user so they
