@@ -7,12 +7,6 @@ export interface Env {
   PI_API_KEY: string;
   PI_AUTHORIZE_BASE_URL: string;
   PORTAL_BASE_URL: string;
-
-  // Shared secret with first-party Auth314 integrations (e.g. auth314-bot).
-  // Authenticates trusted callers of /api/verify/init and is echoed on
-  // outgoing /auth/callback webhook deliveries so those integrations can
-  // verify a callback genuinely came from this Worker.
-  AUTH314_API_SECRET: string;
 }
 
 export type Platform = string;
