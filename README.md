@@ -48,15 +48,8 @@ worker/   Cloudflare Worker: session and verification API, API key auth, KV stor
 portal/   Static page served at app.auth314.com where end users complete Pi sign-in
 ```
 
-## Ecosystem
-
-| Repo | What it is |
-|---|---|
-| [`auth314-dashboard`](https://github.com/Psalm2517/auth314-dashboard) | Dashboard for developers to manage API keys, usage, and verification logs |
-| [`auth314-discord-bot`](https://github.com/Psalm2517/auth314-discord-bot) | Reference Discord integration built on this API. [Add it to your server](https://discord.com/oauth2/authorize?client_id=1527761038999683242&permissions=268437504&integration_type=0&scope=bot+applications.commands) |
-
 ## License
 
 AGPL-3.0. See [LICENSE](./LICENSE). Commercial use outside the terms of the
 AGPL requires a separate agreement; see the
-[Terms of Service](https://app.auth314.com/tos.html).
+[Terms of Service](https://auth314.com/tos).
