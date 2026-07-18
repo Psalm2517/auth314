@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --background: #101112;
-  --foreground: #e8e8e9;
-  --card: #1a1b1d;
-  --border: #2c2d30;
-  --muted: #101112;
-  --muted-foreground: #9a9b9e;
-  --accent: #e8e8e9;
-  --accent-foreground: #101112;
+  --background: #0d0d12;
+  --foreground: #e8e8f0;
+  --card: #13131a;
+  --border: #23232f;
+  --muted: #0d0d12;
+  --muted-foreground: #8888a0;
+  --accent: #6e56cf;
+  --accent-foreground: #ffffff;
   /* RGB triplets (not hex) so Tailwind's /opacity modifier works, e.g. bg-success/15 */
   --success: 76 175 109;
   --destructive: 229 83 75;
