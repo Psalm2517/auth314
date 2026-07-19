@@ -1,6 +1,9 @@
+import logo from "@/assets/logo.svg";
+
 export function Brand({ className }: { className?: string }) {
   return (
-    <div className={className}>
+    <div className={`inline-flex items-center gap-2 ${className ?? ""}`}>
+      <img src={logo} alt="" className="h-[1.15em] w-[1.15em]" aria-hidden />
       Auth
       <span
         className="bg-clip-text text-transparent"
