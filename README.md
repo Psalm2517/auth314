@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./auth314-logo.svg" width="88" alt="Auth314 logo">
+<img src="./auth314-logo-tp.svg" width="88" alt="Auth314 logo">
 
 # Auth314
 
