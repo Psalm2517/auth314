@@ -9,8 +9,8 @@
   --border: #23232f;
   --muted: #0d0d12;
   --muted-foreground: #8888a0;
-  --accent: #6e56cf;
-  --accent-foreground: #ffffff;
+  --accent: #e7e8ea;
+  --accent-foreground: #101112;
   /* RGB triplets (not hex) so Tailwind's /opacity modifier works, e.g. bg-success/15 */
   --success: 76 175 109;
   --destructive: 229 83 75;

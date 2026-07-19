@@ -121,7 +121,7 @@ export function Landing() {
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-[-320px] h-[620px] w-[1100px] -translate-x-1/2 rounded-full"
-          style={{ background: "radial-gradient(ellipse at center, rgba(110,86,207,0.18) 0%, rgba(110,86,207,0.06) 40%, rgba(110,86,207,0) 68%)" }}
+          style={{ background: "radial-gradient(ellipse at center, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 68%)" }}
         />
         <div
           aria-hidden
@@ -299,7 +299,10 @@ export function Landing() {
                 "1 API key",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                  <span className="h-1 w-1 rounded-full flex-none" style={{ background: "var(--accent)" }} />
+                  <span
+                    className="h-1 w-1 rounded-full flex-none"
+                    style={{ background: "linear-gradient(135deg, #ffffff 0%, #c6c7cc 100%)" }}
+                  />
                   {item}
                 </li>
               ))}
