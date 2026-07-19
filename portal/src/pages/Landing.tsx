@@ -4,6 +4,7 @@ import { SiDiscord, SiTelegram, SiGithub } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Brand } from "@/components/Brand";
+import logo from "@/assets/logo.svg";
 
 const PLATFORMS = [
   { icon: SiDiscord, name: "Discord", live: true },
@@ -129,6 +130,12 @@ export function Landing() {
           style={{ background: "radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%)" }}
         />
         <div className="relative mx-auto max-w-[680px] px-8 py-24 text-center">
+          <img
+            src={logo}
+            alt="Auth314"
+            className="mx-auto mb-6 h-16 w-16"
+            style={{ animation: "fade-up 0.5s ease-out 0ms both" }}
+          />
           <div className="inline-flex mb-5" style={{ animation: "fade-up 0.5s ease-out 0ms both" }}>
             <Badge>In development · Free to use</Badge>
           </div>
