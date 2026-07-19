@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./auth314-logo.svg" width="88" alt="Auth314 logo">
+
 # Auth314
 
 **Verification infrastructure for Pi Sign-in.**
