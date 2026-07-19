@@ -157,6 +157,15 @@ export function Landing() {
               <a href="https://dashboard.auth314.com">Get started free</a>
             </Button>
             <a
+              href="/discord-bot/"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
+            >
+              <SiDiscord className="h-4 w-4" />
+              Invite Bot
+            </a>
+            <a
               href={GITHUB_URL}
               target="_blank"
               rel="noopener"
