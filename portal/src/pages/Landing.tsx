@@ -35,6 +35,7 @@ const ROADMAP = [
   "Paid tiers with higher rate limits and quotas",
   "Telegram integration",
   "A drop-in \"Verify with Pi\" widget for websites -- no bot required",
+  "Stable Auth314 IDs, so operators can recognize a returning verified user without ever touching their Pi identity",
 ];
 
 const GITHUB_URL = "https://github.com/Psalm2517/auth314";
