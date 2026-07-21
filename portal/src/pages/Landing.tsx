@@ -34,18 +34,18 @@ const STEPS = [
 const ROADMAP = [
   "Paid tiers with higher rate limits and quotas",
   "Telegram integration",
-  "A drop-in \"Verify with Pi\" widget for websites -- no bot required",
+  "A drop-in \"Verify with Pi\" widget for websites, no bot required",
   "Stable Auth314 IDs, so operators can recognize a returning verified user without ever touching their Pi identity",
 ];
 
 const FAQ = [
   {
     q: "Does Auth314 share my Pi identity with the app I'm verifying for?",
-    a: "No. Your Pi UID and username stay internal to Auth314 -- integrations only ever receive a verified/not-verified signal, per Pi Developer ToS §4.",
+    a: "No. Your Pi UID and username stay internal to Auth314. Integrations only ever receive a verified/not-verified signal, per Pi Developer ToS §4.",
   },
   {
     q: "Is it free?",
-    a: "The free tier (100 verifications/month, 5 requests/minute, 1 API key) is permanent and stays free after launch. Most Discord servers should just use the hosted Auth314 bot, which isn't limited by this -- these limits are for people building their own custom integration. Need higher limits? Email hello@auth314.com.",
+    a: "The free tier (100 verifications/month, 5 requests/minute, 1 API key) is permanent and stays free after launch. Most Discord servers should just use the hosted Auth314 bot, which isn't limited by this. These limits are for people building their own custom integration. Need higher limits? Email hello@auth314.com.",
   },
   {
     q: "Which platforms are supported right now?",
@@ -197,7 +197,7 @@ export function Landing() {
             style={{ animation: "fade-up 0.55s ease-out 160ms both" }}
           >
             Auth314 handles the Pi Sign-in OAuth flow so you don't have to.
-            Get a verified signal delivered to your webhook -- no Pi Developer
+            Get a verified signal delivered to your webhook, no Pi Developer
             Portal app, no OAuth to build.
           </p>
           <div
@@ -323,7 +323,7 @@ export function Landing() {
             ))}
           </div>
           <p className="mt-6 text-xs text-muted-foreground">
-            The Discord bot is free to use -- no API key or Auth314 account required.
+            The Discord bot is free to use, no API key or Auth314 account required.
           </p>
         </div>
       </FadeSection>
