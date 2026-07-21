@@ -15,8 +15,8 @@ async function sha256(input: string): Promise<string> {
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-export const FREE_TIER_RATE_LIMIT_PER_MIN = 20;
-export const FREE_TIER_MONTHLY_QUOTA = 500;
+export const FREE_TIER_RATE_LIMIT_PER_MIN = 5;
+export const FREE_TIER_MONTHLY_QUOTA = 100;
 
 export type ApiKeyValidationResult =
   | { ok: true; record: ApiKeyRecord }

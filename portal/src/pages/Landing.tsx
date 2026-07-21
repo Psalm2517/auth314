@@ -45,7 +45,7 @@ const FAQ = [
   },
   {
     q: "Is it free?",
-    a: "The free tier (500 verifications/month, 20 requests/minute, 1 API key) is permanent and stays free after launch. Paid tiers with higher limits are planned, but there will always be a free tier.",
+    a: "The free tier (100 verifications/month, 5 requests/minute, 1 API key) is permanent and stays free after launch. Most Discord servers should just use the hosted Auth314 bot, which isn't limited by this -- these limits are for people building their own custom integration. Need higher limits? Email hello@auth314.com.",
   },
   {
     q: "Which platforms are supported right now?",
@@ -325,8 +325,8 @@ export function Landing() {
             </div>
             <ul className="space-y-2.5">
               {[
-                "500 verifications / month",
-                "20 requests / minute",
+                "100 verifications / month",
+                "5 requests / minute",
                 "1 API key",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2.5 text-sm text-muted-foreground">
