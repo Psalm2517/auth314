@@ -16,7 +16,7 @@ export function TermsOfService() {
       <div className="mx-auto max-w-[680px] px-8 py-16">
         <h1 className="mb-2 text-2xl font-bold tracking-tight">Terms of Service</h1>
         <p className="mb-10 text-sm text-muted-foreground">
-          Last updated July 17, 2026. By using any Auth314 service -- including auth314.com,
+          Last updated July 21, 2026. By using any Auth314 service -- including auth314.com,
           app.auth314.com, dashboard.auth314.com, the Auth314 API, or the Auth314 Discord bot --
           you agree to these terms.
         </p>
@@ -76,7 +76,7 @@ export function TermsOfService() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">5. Free tier and limits</h2>
             <p>
-              Auth314 currently offers a free tier with 500 verifications per month, 20 requests per
+              Auth314 currently offers a free tier with 100 verifications per month, 5 requests per
               minute, and 1 API key. The free tier is permanent and will remain available after paid
               plans are introduced. All tier limits and features are subject to change; Auth314 will
               provide reasonable notice of material changes. Exceeding limits returns an error rather
