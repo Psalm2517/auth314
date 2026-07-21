@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Globe } from "lucide-react";
+import { ChevronDown, Globe } from "lucide-react";
 import { SiDiscord, SiTelegram, SiGithub } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -81,6 +81,26 @@ function useFadeIn(threshold = 0.12) {
   }, [threshold]);
 
   return { ref, visible };
+}
+
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="py-1 first:pt-0 last:pb-0">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-4 py-4 text-left text-sm font-semibold"
+      >
+        {q}
+        <ChevronDown
+          className={`h-4 w-4 flex-none text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      {open && <p className="pb-4 text-sm text-muted-foreground">{a}</p>}
+    </div>
+  );
 }
 
 function FadeSection({
@@ -302,19 +322,18 @@ export function Landing() {
               </div>
             ))}
           </div>
+          <p className="mt-6 text-xs text-muted-foreground">
+            The Discord bot is free to use -- no API key or Auth314 account required.
+          </p>
         </div>
       </FadeSection>
 
       {/* Pricing */}
       <FadeSection className="border-b border-border">
         <div className="mx-auto max-w-[680px] px-8 py-16">
-          <h2 className="mb-2 text-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          <h2 className="mb-10 text-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
             Pricing
           </h2>
-          <p className="mx-auto mb-10 max-w-[520px] text-center text-sm text-muted-foreground">
-            The free tier is permanent and will stay after launch. Paid plans will be introduced
-            later with higher limits -- there will always be a free tier.
-          </p>
           <div className="rounded-lg border border-border bg-card p-6">
             <div className="mb-5 flex items-center justify-between">
               <div>
@@ -394,15 +413,8 @@ export function Landing() {
             Frequently asked questions
           </h2>
           <div className="divide-y divide-border">
-            {FAQ.map(({ q, a }, i) => (
-              <div
-                key={q}
-                className="py-5 first:pt-0 last:pb-0"
-                style={{ transitionDelay: `${i * 50}ms` }}
-              >
-                <h3 className="mb-1.5 text-sm font-semibold">{q}</h3>
-                <p className="text-sm text-muted-foreground">{a}</p>
-              </div>
+            {FAQ.map(({ q, a }) => (
+              <FaqItem key={q} q={q} a={a} />
             ))}
           </div>
         </div>
