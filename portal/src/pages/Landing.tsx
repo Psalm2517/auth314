@@ -38,6 +38,29 @@ const ROADMAP = [
   "Stable Auth314 IDs, so operators can recognize a returning verified user without ever touching their Pi identity",
 ];
 
+const FAQ = [
+  {
+    q: "Does Auth314 share my Pi identity with the app I'm verifying for?",
+    a: "No. Your Pi UID and username stay internal to Auth314 -- integrations only ever receive a verified/not-verified signal, per Pi Developer ToS §4.",
+  },
+  {
+    q: "Is it free?",
+    a: "The free tier (500 verifications/month, 20 requests/minute, 1 API key) is permanent and stays free after launch. Paid tiers with higher limits are planned, but there will always be a free tier.",
+  },
+  {
+    q: "Which platforms are supported right now?",
+    a: "Discord is live today via the Auth314 bot. Telegram and a website widget are next on the roadmap.",
+  },
+  {
+    q: "Is Auth314 open source?",
+    a: "Yes, the whole stack is AGPL-3.0 licensed and available on GitHub.",
+  },
+  {
+    q: "How do I get help or report a problem?",
+    a: "Email hello@auth314.com, or open an issue on GitHub.",
+  },
+];
+
 const GITHUB_URL = "https://github.com/Psalm2517/auth314";
 
 function useFadeIn(threshold = 0.12) {
@@ -344,7 +367,7 @@ export function Landing() {
       </FadeSection>
 
       {/* Roadmap */}
-      <FadeSection>
+      <FadeSection className="border-b border-border">
         <div className="mx-auto max-w-[680px] px-8 py-16">
           <h2 className="mb-10 text-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
             What's planned
@@ -361,6 +384,27 @@ export function Landing() {
               </li>
             ))}
           </ul>
+        </div>
+      </FadeSection>
+
+      {/* FAQ */}
+      <FadeSection>
+        <div className="mx-auto max-w-[680px] px-8 py-16">
+          <h2 className="mb-10 text-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            Frequently asked questions
+          </h2>
+          <div className="divide-y divide-border">
+            {FAQ.map(({ q, a }, i) => (
+              <div
+                key={q}
+                className="py-5 first:pt-0 last:pb-0"
+                style={{ transitionDelay: `${i * 50}ms` }}
+              >
+                <h3 className="mb-1.5 text-sm font-semibold">{q}</h3>
+                <p className="text-sm text-muted-foreground">{a}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </FadeSection>
 
